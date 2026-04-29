@@ -16,9 +16,11 @@ const LOCALHOST_PORTS = new Set(["80", "443", "3000", "3001", "5173"]);
 // - {project}-git-{branch}-{username}.vercel.app
 // Only allow previews from this specific project to prevent other Vercel apps from accessing the API
 const ALLOWED_VERCEL_PREVIEW_PREFIXES = [
-  "ryos-",      // Main project name
-  "ryo-lu-",    // Username-based prefix
-  "os-ryo-",    // Alternative naming
+  "ryos-",               // Original project name
+  "ryo-lu-",             // Username-based prefix
+  "os-ryo-",             // Alternative naming
+  "midicode-hardware-",  // New MIDICODE HARDWARE project
+  "midicode-",           // Short prefix variant
 ];
 
 function normalizeEnv(env: string | undefined): RuntimeEnv | null {

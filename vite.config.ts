@@ -189,9 +189,9 @@ export default defineConfig({
         "fonts/*.woff2",
       ],
       manifest: {
-        name: "ryOS",
-        short_name: "ryOS",
-        description: "An AI OS experience, made with Cursor",
+        name: "MIDICODE HARDWARE",
+        short_name: "MIDICODE",
+        description: "MIDICODE HARDWARE — an AI OS experience",
         theme_color: "#000000",
         background_color: "#000000",
         display: "standalone",
