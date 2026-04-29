@@ -61,7 +61,7 @@ function VersionDisplay() {
 
   return (
     <p className="text-[11px] text-neutral-600 font-geneva-12">
-      ryOS {displayVersion}
+      MIDICODE HARDWARE {displayVersion}
       {displayBuild}
       {" · "}
       <a

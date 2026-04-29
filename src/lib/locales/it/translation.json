@@ -387,8 +387,8 @@
           "title": "Applet Store"
         },
         "createWithRyosChat": {
-          "description": "Chiedi a ryOS Chat di creare app e applet personalizzate per te. Condividi le tue idee e ottieni app funzionanti all'istante.",
-          "title": "Crea con ryOS Chat"
+          "description": "Chiedi a MIDICODE HARDWARE Chat di creare app e applet personalizzate per te. Condividi le tue idee e ottieni app funzionanti all'istante.",
+          "title": "Crea con MIDICODE HARDWARE Chat"
         },
         "keepUpdated": {
           "description": "Controlla aggiornamenti nel menu Store per ottenere le ultime versioni delle tue applet installate.",
@@ -403,7 +403,7 @@
           "title": "Condividi Applet"
         },
         "viewApplets": {
-          "description": "Apri ed esegui applet salvate da ryOS Chat o scaricate dallo store.",
+          "description": "Apri ed esegui applet salvate da MIDICODE HARDWARE Chat o scaricate dallo store.",
           "title": "Visualizza Applet"
         }
       },
@@ -429,7 +429,7 @@
         "noAppletsOpen": "Nessuna applet aperta",
         "open": "Apri...",
         "openAppletStore": "Apri Applet Store",
-        "ryosApp": "App ryOS",
+        "midicodeApp": "App MIDICODE HARDWARE",
         "shareApplet": "Condividi Applet...",
         "store": "Store",
         "untitled": "Senza titolo",
@@ -642,7 +642,7 @@
       },
       "help": {
         "chatWithRyo": {
-          "description": "Digita il tuo messaggio per chattare con Ryo, generare codice o ottenere aiuto con ryOS.",
+          "description": "Digita il tuo messaggio per chattare con Ryo, generare codice o ottenere aiuto con MIDICODE HARDWARE.",
           "title": "Chatta con Ryo"
         },
         "controlApps": {
@@ -720,7 +720,7 @@
         "loginRequired": "Accesso richiesto",
         "loginToChat": "Accedi alla Chat",
         "loginToContinue": "Accedi per continuare a chattare con Ryo.",
-        "loginToRyOS": "Accedi a ryOS",
+        "loginToRyOS": "Accedi a MIDICODE HARDWARE",
         "newChat": "Nuova chat",
         "noTranscriptionText": "Nessun testo trascritto ricevuto",
         "nudgeSent": "👋 *sollecito inviato*",
@@ -1114,7 +1114,7 @@
           "title": "Modifica Dettagli"
         },
         "importVCards": {
-          "description": "Importa file .vcf dal menu File per portare i contatti in ryOS",
+          "description": "Importa file .vcf dal menu File per portare i contatti in MIDICODE HARDWARE",
           "title": "Importa vCard"
         },
         "useWithRyo": {
@@ -1218,7 +1218,7 @@
         "confirmForceUpload": "Caricare sul cloud?",
         "confirmForceUploadDesc": "I dati nel cloud verranno sovrascritti con i dati attuali di questo dispositivo per ogni elemento di Sincronizzazione Automatica abilitato.",
         "confirmRestore": "Ripristinare dal cloud?",
-        "confirmRestoreDesc": "Questo sostituirà tutte le impostazioni e i file correnti con il backup nel cloud. ryOS verrà riavviato.",
+        "confirmRestoreDesc": "Questo sostituirà tutte le impostazioni e i file correnti con il backup nel cloud. MIDICODE HARDWARE verrà riavviato.",
         "description": "Esegui il backup o ripristina tutte le impostazioni e i file nel cloud. Max {{limit}} MB.",
         "forceDownload": "Scarica",
         "forceDownloadFailed": "Scaricamento dal cloud non riuscito",
@@ -1270,7 +1270,7 @@
       "errorBoundaries": "Limiti di errore",
       "errorBoundariesDescription": "Attiva i fallback di crash dell'app o del desktop per i test.",
       "formatFileSystem": "Formatta File System",
-      "formatFileSystemDescription": "Questo cancellerà tutti i file (eccetto i documenti di esempio), le immagini e gli sfondi personalizzati. ryOS si riavvierà dopo la formattazione.",
+      "formatFileSystemDescription": "Questo cancellerà tutti i file (eccetto i documenti di esempio), le immagini e gli sfondi personalizzati. MIDICODE HARDWARE si riavvierà dopo la formattazione.",
       "help": {
         "aiModel": {
           "description": "Seleziona il modello AI utilizzato da Chat e dall'assistente del Terminale",
@@ -1309,7 +1309,7 @@
       "logIn": "Accedi",
       "logOut": "Esci",
       "logOutOfAllDevices": "Esci da tutti i dispositivi",
-      "loggedInToRyOS": "Accesso effettuato a ryOS",
+      "loggedInToRyOS": "Accesso effettuato a MIDICODE HARDWARE",
       "loggingOut": "Disconnessione in corso...",
       "login": "Accedi",
       "loginToSendMessages": "Accedi per inviare messaggi e altro",
@@ -1337,7 +1337,7 @@
       "resetAllSettings": "Ripristina tutte le impostazioni",
       "resetAllSettingsDescription": "Questo cancellerà tutte le impostazioni salvate e ripristinerà i valori predefiniti",
       "restore": "Ripristina",
-      "ryOSAccount": "Account ryOS",
+      "MIDICODE HARDWAREAccount": "Account MIDICODE HARDWARE",
       "screenSaver": "Salvaschermo",
       "screenSaverDescription": "Si attiva dopo un periodo di inattività",
       "screenSaverExitHint": "Fai clic o premi un tasto qualsiasi per uscire",
@@ -1410,7 +1410,7 @@
         "linkPending": "Link pronto - completalo in Telegram",
         "linkReady": "Il link Telegram è pronto",
         "linkedAs": "Collegato come {{account}}",
-        "loggedOutDescription": "Accedi per collegare Telegram al tuo account ryOS",
+        "loggedOutDescription": "Accedi per collegare Telegram al tuo account MIDICODE HARDWARE",
         "loginRequired": "Effettua l'accesso per collegare Telegram",
         "manage": "Gestisci",
         "openTelegram": "Apri Telegram",
@@ -3232,7 +3232,7 @@
     "aboutThisMac": {
       "builtInMemory": "Memoria integrata",
       "clickToToggle": "Clicca per alternare",
-      "description": "Informazioni su ryOS su questo computer",
+      "description": "Informazioni su MIDICODE HARDWARE su questo computer",
       "largestUnusedBlock": "Blocco più grande non utilizzato",
       "mb": "MB",
       "system": "Sistema",
@@ -3273,7 +3273,7 @@
     "auth": {
       "createAccount": "Crea account",
       "creatingAccount": "Creazione in corso...",
-      "dialogTitle": "Accesso a ryOS",
+      "dialogTitle": "Accesso a MIDICODE HARDWARE",
       "logIn": "Accedi",
       "logOut": "Esci",
       "logOutDescription": "Sei sicuro di voler uscire? Verrai disconnesso dal tuo account.",
@@ -3374,7 +3374,7 @@
     "errorBoundaries": {
       "appDescription": "Riavvia per aprire una nuova finestra, o chiudi questa finestra bloccata. Le altre app aperte continueranno a funzionare.",
       "appHeading": "{{appName}} si è chiusa inaspettatamente",
-      "desktopDescription": "Ricarica ryOS per ripristinare il Dock, il Desktop e la barra dei menu.",
+      "desktopDescription": "Ricarica MIDICODE HARDWARE per ripristinare il Dock, il Desktop e la barra dei menu.",
       "desktopHeading": "Desktop si è chiuso inaspettatamente",
       "relaunch": "Riavvia",
       "reloadDesktop": "Ricarica Desktop"
@@ -3389,8 +3389,8 @@
     },
     "htmlPreview": {
       "bannerFallbackTitle": "Applet senza titolo",
-      "codePreviewTitle": "Anteprima codice ryOS",
-      "codePreviewTitleFullscreen": "Anteprima codice ryOS a schermo intero",
+      "codePreviewTitle": "Anteprima codice MIDICODE HARDWARE",
+      "codePreviewTitleFullscreen": "Anteprima codice MIDICODE HARDWARE a schermo intero",
       "copyHtml": "Copia codice HTML",
       "downloadHtml": "Scarica HTML",
       "exitFullscreen": "Esci da schermo intero",
@@ -3452,8 +3452,8 @@
     "startMenu": {
       "aboutThisComputer": "Informazioni su questo computer",
       "run": "Esegui...",
-      "ryos98": "98",
-      "ryosProfessional": "Professional",
+      "midicode98": "98",
+      "midicodeProfessional": "Professional",
       "start": "Avvio"
     },
     "swipeInstructions": {
@@ -3465,16 +3465,16 @@
     "system": {
       "debugBootScreenTest": "Test schermata di avvio debug...",
       "formatFileSystem": "Formatta file system",
-      "formatFileSystemDesc": "Sei sicuro di voler formattare il file system? Questo eliminerà definitivamente tutti i documenti (eccetto i documenti di esempio), le immagini e gli sfondi personalizzati. ryOS si riavvierà dopo la formattazione.",
+      "formatFileSystemDesc": "Sei sicuro di voler formattare il file system? Questo eliminerà definitivamente tutti i documenti (eccetto i documenti di esempio), le immagini e gli sfondi personalizzati. MIDICODE HARDWARE si riavvierà dopo la formattazione.",
       "formattingFileSystem": "Formattazione del file system...",
       "rebooting": "Riavvio in corso...",
       "resetAllSettings": "Reimposta tutte le impostazioni",
-      "resetAllSettingsDesc": "Sei sicuro di voler reimpostare tutte le impostazioni? Questo cancellerà tutte le impostazioni salvate e ripristinerà gli stati predefiniti. ryOS si riavvierà dopo la reimpostazione.",
+      "resetAllSettingsDesc": "Sei sicuro di voler reimpostare tutte le impostazioni? Questo cancellerà tutte le impostazioni salvate e ripristinerà gli stati predefiniti. MIDICODE HARDWARE si riavvierà dopo la reimpostazione.",
       "resettingSystem": "Reimpostazione del sistema...",
       "restoringSystem": "Ripristino del sistema...",
       "systemRestoring": "Ripristino del sistema...",
-      "updatingToRyOS": "Aggiornamento a ryOS {{version}}...",
-      "updatingToRyOSWithBuild": "Aggiornamento a ryOS {{version}} ({{buildNumber}})..."
+      "updatingToRyOS": "Aggiornamento a MIDICODE HARDWARE {{version}}...",
+      "updatingToRyOSWithBuild": "Aggiornamento a MIDICODE HARDWARE {{version}} ({{buildNumber}})..."
     },
     "toast": {
       "alreadyLatestVersion": "Stai già eseguendo l'ultima versione",
@@ -3485,7 +3485,7 @@
       "noAssetsToCache": "Nessuna risorsa da memorizzare nella cache",
       "reboot": "Riavvia",
       "total": "totale",
-      "updateReady": "Aggiornamento pronto per ryOS {{version}} ({{buildNumber}})",
+      "updateReady": "Aggiornamento pronto per MIDICODE HARDWARE {{version}} ({{buildNumber}})",
       "updatingAssets": "Aggiornamento risorse",
       "updatingIcons": "Aggiornamento icone",
       "updatingSounds": "Aggiornamento suoni",
@@ -3511,7 +3511,7 @@
   "settings": {
     "language": {
       "chineseTraditional": "中文",
-      "description": "Seleziona la tua lingua preferita per l'interfaccia di ryOS",
+      "description": "Seleziona la tua lingua preferita per l'interfaccia di MIDICODE HARDWARE",
       "english": "Inglese",
       "french": "Français",
       "german": "Deutsch",
@@ -3534,7 +3534,7 @@
     "hintNavigate": "naviga",
     "hintOpen": "apri",
     "noResults": "Nessun risultato",
-    "placeholder": "Cerca in ryOS",
+    "placeholder": "Cerca in MIDICODE HARDWARE",
     "sections": {
       "applets": "Applet",
       "apps": "Applicazioni",
