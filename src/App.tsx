@@ -124,7 +124,7 @@ export function App() {
         // Mark as seen immediately so dismissing the toast won't show it again
         setLastSeenDesktopVersion(result.version);
         // New version available - show update toast (both web and Tauri)
-        toast(`ryOS ${result.version} for Mac is available`, {
+        toast(`MIDICODE HARDWARE ${result.version} for Mac is available`, {
           id: 'desktop-update',
           icon: <DownloadSimple className="h-4 w-4" weight="bold" />,
           duration: Infinity,
@@ -142,7 +142,7 @@ export function App() {
         // Mark as seen immediately so dismissing the toast won't show it again
         setLastSeenDesktopVersion(result.version);
         // First time user on web - show initial download toast (not in Tauri)
-        toast("ryOS is available as a Mac app", {
+        toast("MIDICODE HARDWARE is available as a Mac app", {
           id: 'desktop-update',
           icon: <DownloadSimple className="h-4 w-4" weight="bold" />,
           duration: Infinity,
