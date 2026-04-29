@@ -49,6 +49,45 @@ A modern web-based desktop environment inspired by classic macOS and Windows, bu
 4. Chat with Ryo AI for help or to control apps
 5. Files auto-save to browser storage
 
+## Local Development
+
+### Fastest way to run locally
+
+If you just want the app running without backend services, use:
+
+```bash
+bun run dev:vite
+```
+
+This starts the frontend only at:
+
+```bash
+http://localhost:5173/
+```
+
+### Full stack local development
+
+If you want the standalone API and frontend together, use:
+
+```bash
+bun run dev
+```
+
+This requires Redis configuration before the API server will start. Set one of:
+
+```bash
+REDIS_URL=redis://...
+```
+
+or:
+
+```bash
+REDIS_KV_REST_API_URL=...
+REDIS_KV_REST_API_TOKEN=...
+```
+
+Without Redis, `bun run dev` will fail during API startup, but `bun run dev:vite` will still work for frontend-only development.
+
 ## Project Structure
 
 ```
@@ -95,6 +134,8 @@ bun run api:start    # Run standalone API server in production mode
 ```
 
 For local development, `bun run dev` starts both the standalone Bun API server and the Vite dev server with an `/api` proxy — no Vercel CLI required.
+
+If you do not have Redis env configured yet, use `bun run dev:vite` first to get the UI running locally.
 
 ## Running the API Separately
 
