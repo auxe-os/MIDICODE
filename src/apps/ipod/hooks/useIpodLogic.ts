@@ -1376,7 +1376,7 @@ export function useIpodLogic({
         const widthScale = availableWidth / baseWidth;
         const heightScale = availableHeight / baseHeight;
         const newScale = Math.min(widthScale, heightScale, 2);
-        const finalScale = Math.max(1, newScale);
+        const finalScale = Math.max(0.82, newScale);
 
         setScale((prevScale) => {
           if (Math.abs(prevScale - finalScale) > 0.01) return finalScale;

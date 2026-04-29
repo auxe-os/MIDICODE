@@ -35,6 +35,10 @@ import { useInternetExplorerStoreShallow } from "@/stores/helpers";
 import { abortableFetch } from "@/utils/abortableFetch";
 import { onAppUpdate } from "@/utils/appEventBus";
 import { decodeHtmlEntities } from "@/utils/decodeHtmlEntities";
+import {
+  buildInternetExplorerErrorFromResponse,
+  buildInternetExplorerErrorFromThrownError,
+} from "../utils/errorMapping";
 
 // Helper function to get language display name
 const getLanguageDisplayName = (lang: LanguageOption): string => {
@@ -859,6 +863,27 @@ export function useInternetExplorerLogic({
                 }, content-type: ${res.headers.get("content-type")}`
               );
 
+              if (!res.ok) {
+                const configError =
+                  await buildInternetExplorerErrorFromResponse(
+                    res,
+                    normalizedTargetUrl,
+                    {
+                      type: "ai_generation_error",
+                      message:
+                        "Internet Explorer could not prepare the requested time-travel page.",
+                    }
+                  );
+
+                if (
+                  configError.type === "service_configuration_error" ||
+                  configError.type === "service_unavailable"
+                ) {
+                  handleNavigationError(configError, normalizedTargetUrl);
+                  return;
+                }
+              }
+
               if (
                 res.ok &&
                 (res.headers.get("content-type") || "").includes("text/html")
@@ -898,6 +923,19 @@ export function useInternetExplorerLogic({
             } catch (e) {
               if (e instanceof Error && e.name === "AbortError") return;
               console.warn("[IE] AI remote cache fetch failed", e);
+              const mappedError = buildInternetExplorerErrorFromThrownError(
+                e,
+                normalizedTargetUrl,
+                {
+                  type: "service_unavailable",
+                  message:
+                    "Internet Explorer could not reach the API service for time-travel navigation.",
+                }
+              );
+              if (mappedError.type === "service_unavailable") {
+                handleNavigationError(mappedError, normalizedTargetUrl);
+                return;
+              }
             }
           }
 

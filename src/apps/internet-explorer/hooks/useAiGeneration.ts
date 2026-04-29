@@ -12,6 +12,7 @@ import { checkOfflineAndShowError } from "@/utils/offline";
 import i18n from "@/lib/i18n";
 import { getApiUrl } from "@/utils/platform";
 import { abortableFetch } from "@/utils/abortableFetch";
+import { buildInternetExplorerErrorFromThrownError } from "../utils/errorMapping";
 
 interface UseAiGenerationProps {
   onLoadingChange?: (isLoading: boolean) => void;
@@ -210,6 +211,20 @@ export function useAiGeneration({
   } = useChat({
     messages: [],
     onFinish: handleAiFinish,
+    onError: (error) => {
+      const targetUrl =
+        generatingUrlRef.current || "the requested website";
+      const mappedError = buildInternetExplorerErrorFromThrownError(
+        error,
+        targetUrl,
+        {
+          type: "ai_generation_error",
+          message:
+            "Failed to generate the requested website preview.",
+        }
+      );
+      loadError(mappedError.message, mappedError);
+    },
     transport: new DefaultChatTransport({
       api: getApiUrl("/api/ie-generate"),
       body: {
@@ -459,11 +474,15 @@ IMPORTANT NAVIGATION CONTEXT:
         return;
       }
       console.error("Failed to generate futuristic website:", error);
-      loadError(
-        `Failed to generate website preview for ${normalizedTargetUrl} in ${year}. ${
-          error instanceof Error ? error.message : String(error)
-        }`
+      const mappedError = buildInternetExplorerErrorFromThrownError(
+        error,
+        normalizedTargetUrl,
+        {
+          type: "ai_generation_error",
+          message: `Failed to generate website preview for ${normalizedTargetUrl} in ${year}.`,
+        }
       );
+      loadError(mappedError.message, mappedError);
     }
   };
 

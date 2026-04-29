@@ -40,6 +40,23 @@ function sendJsonError(
   res.status(status).json({ error });
 }
 
+function sendJsonPayload(
+  res: VercelResponse,
+  status: number,
+  payload: Record<string, unknown>
+): void {
+  res.status(status).json(payload);
+}
+
+function isRedisConfigurationError(error: unknown): error is Error {
+  return (
+    error instanceof Error &&
+    (error.message.includes("Missing Redis configuration") ||
+      error.message.includes("REDIS_PROVIDER requests") ||
+      error.message.includes("Missing REDIS_URL"))
+  );
+}
+
 export function apiHandler<TBody = unknown>(
   options: ApiHandlerOptions,
   handler: WrappedApiHandler<TBody>
@@ -87,7 +104,29 @@ export function apiHandler<TBody = unknown>(
       return;
     }
 
-    const redis = createRedis();
+    let redis: Redis;
+    try {
+      redis = createRedis();
+    } catch (error) {
+      logger.error("Redis initialization error", error);
+      const status = isRedisConfigurationError(error) ? 503 : 500;
+      logger.response(status, Date.now() - startTime);
+
+      if (isRedisConfigurationError(error)) {
+        sendJsonPayload(res, status, {
+          error: "service_unavailable",
+          code: "redis_not_configured",
+          message:
+            "Redis is not configured for the API server.",
+          details:
+            "Set REDIS_URL for standard Redis or REDIS_KV_REST_API_URL plus REDIS_KV_REST_API_TOKEN for Upstash REST, then restart the API server.",
+        });
+        return;
+      }
+
+      sendJsonError(res, status, "Internal Server Error");
+      return;
+    }
 
     let body: TBody | null = null;
     if (parseJsonBody) {
@@ -146,4 +185,3 @@ export function apiHandler<TBody = unknown>(
     });
   };
 }
-

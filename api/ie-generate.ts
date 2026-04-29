@@ -11,6 +11,8 @@ import {
   SupportedModel,
   DEFAULT_MODEL,
   getModelInstance,
+  getModelProvider,
+  getMissingModelProviderEnvVars,
   getOpenAIProviderOptions,
 } from "./_utils/_aiModels.js";
 import { normalizeUrlForCacheKey } from "./_utils/_url.js";
@@ -269,7 +271,30 @@ export default apiHandler<IEGenerateRequestBody>(
       return res.status(400).send(`Unsupported model: ${model}`);
     }
 
-    const selectedModel = getModelInstance(model as SupportedModel);
+    const selectedModelName = model as SupportedModel;
+    const missingEnvVars = getMissingModelProviderEnvVars(selectedModelName);
+    if (missingEnvVars.length > 0) {
+      logger.warn("AI provider not configured for IE generation", {
+        model: selectedModelName,
+        missingEnvVars,
+      });
+      logger.response(503, Date.now() - startTime);
+      res.setHeader("Content-Type", "application/json");
+      return res.status(503).json({
+        error: "service_unavailable",
+        code: "ai_provider_not_configured",
+        provider: getModelProvider(selectedModelName),
+        missingEnvVars,
+        message: `The ${getModelProvider(
+          selectedModelName
+        )} provider is not configured for Internet Explorer AI generation.`,
+        details: `Set ${missingEnvVars.join(
+          " or "
+        )} and restart the API server.`,
+      });
+    }
+
+    const selectedModel = getModelInstance(selectedModelName);
 
     // Generate dynamic portion of the system prompt, passing the rawUrl
     const systemPrompt = getDynamicSystemPrompt(effectiveYear, rawUrl ?? null);
@@ -312,7 +337,7 @@ export default apiHandler<IEGenerateRequestBody>(
       temperature: 0.7,
       maxOutputTokens: 4000,
       experimental_transform: smoothStream(),
-      providerOptions: getOpenAIProviderOptions(model),
+      providerOptions: getOpenAIProviderOptions(selectedModelName),
       onFinish: async ({ text }) => {
         if (!cacheKey) {
           logger.info("No cacheKey available, skipping cache save");
@@ -330,6 +355,10 @@ export default apiHandler<IEGenerateRequestBody>(
               .replace(/```(?:html)?\s*/g, "")
               .replace(/```/g, "")
               .trim();
+          }
+          if (!cleaned) {
+            logger.info(`Skipping empty IE cache write for ${cacheKey}`);
+            return;
           }
           // Remove duplicate TITLE comments beyond first
           const titleCommentMatch = cleaned.match(/<!--\s*TITLE:[\s\S]*?-->/);
