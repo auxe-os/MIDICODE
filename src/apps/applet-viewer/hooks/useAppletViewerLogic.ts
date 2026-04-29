@@ -733,7 +733,7 @@ export function useAppletViewerLogic({
   const ensureMacFonts = (content: string): string => {
     if (!isMacTheme || !content) return content;
     const preload = `<link rel="stylesheet" href="/fonts/fonts.css">`;
-    const fontStyle = `<style data-ryos-applet-font-fix>
+    const fontStyle = `<style data-midicode-applet-font-fix>
       html,body{font-family:"LucidaGrande","Lucida Grande",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Noto Color Emoji",sans-serif!important}
       *{font-family:inherit!important}
       h1,h2,h3,h4,h5,h6,p,div,span,a,li,ul,ol,button,input,select,textarea,label,code,pre,blockquote,small,strong,em,table,th,td{font-family:"LucidaGrande","Lucida Grande",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Noto Color Emoji",sans-serif!important}

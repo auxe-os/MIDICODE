@@ -1044,8 +1044,8 @@ export function useControlPanelsLogic({
       setCloudProgress({ phase: t("apps.control-panels.cloudSync.progress.finishing"), percent: 90 });
 
       // Handle wallpaper restore
-      if (backup.localStorage["ryos:app:settings:wallpaper"]) {
-        const wallpaper = backup.localStorage["ryos:app:settings:wallpaper"];
+      if (backup.localStorage["midicode:app:settings:wallpaper"]) {
+        const wallpaper = backup.localStorage["midicode:app:settings:wallpaper"];
         if (wallpaper) {
           setCurrentWallpaper(wallpaper);
         }
@@ -1055,7 +1055,7 @@ export function useControlPanelsLogic({
       // Preserve the version from the backup so Zustand doesn't
       // re-run migrations on already-current data.
       try {
-        const persistedKey = "ryos:files";
+        const persistedKey = "midicode:files";
         const persistedState = localStorage.getItem(persistedKey);
         if (persistedState) {
           const parsed = JSON.parse(persistedState);
@@ -1181,14 +1181,14 @@ export function useControlPanelsLogic({
 
   const performReset = () => {
     // Preserve critical recovery keys while clearing everything else
-    const fileMetadataStore = localStorage.getItem("ryos:files");
+    const fileMetadataStore = localStorage.getItem("midicode:files");
     const usernameRecovery = localStorage.getItem("_usr_recovery_key_");
 
     clearAllAppStates();
     clearPrefetchFlag(); // Force re-prefetch on next boot
 
     if (fileMetadataStore) {
-      localStorage.setItem("ryos:files", fileMetadataStore);
+      localStorage.setItem("midicode:files", fileMetadataStore);
     }
     if (usernameRecovery) {
       localStorage.setItem("_usr_recovery_key_", usernameRecovery);
@@ -1417,8 +1417,8 @@ export function useControlPanelsLogic({
         }
 
         // Update wallpaper after restore
-        if (backup.localStorage["ryos:app:settings:wallpaper"]) {
-          const wallpaper = backup.localStorage["ryos:app:settings:wallpaper"];
+        if (backup.localStorage["midicode:app:settings:wallpaper"]) {
+          const wallpaper = backup.localStorage["midicode:app:settings:wallpaper"];
           if (wallpaper) {
             setCurrentWallpaper(wallpaper);
           }
@@ -1428,7 +1428,7 @@ export function useControlPanelsLogic({
           // Ensure the files store is in a safe state after restore.
           // Preserve the version from the backup so Zustand doesn't
           // re-run migrations on already-current data.
-          const persistedKey = "ryos:files";
+          const persistedKey = "midicode:files";
           const persistedState = localStorage.getItem(persistedKey);
 
           if (persistedState) {

@@ -293,7 +293,7 @@ const getInitialState = (): Omit<
 };
 
 const STORE_VERSION = 3;
-const STORE_NAME = "ryos:chats";
+const STORE_NAME = "midicode:chats";
 
 export const useChatsStore = create<ChatsStoreState>()(
   persist(

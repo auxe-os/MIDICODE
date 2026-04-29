@@ -175,7 +175,7 @@ export function mergePersistedCloudSyncDomainStatus(
   return next;
 }
 
-const STORE_NAME = "ryos:cloud-sync";
+const STORE_NAME = "midicode:cloud-sync";
 const STORE_VERSION = 10;
 
 export const useCloudSyncStore = create<CloudSyncStoreState>()(

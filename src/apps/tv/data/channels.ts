@@ -11,7 +11,7 @@ export interface Channel {
 
 export const DEFAULT_CHANNELS: Channel[] = [
   {
-    id: "ryos-picks",
+    id: "midicode-picks",
     number: 1,
     name: "RyoTV",
     description: "Plays from your Videos app library",
@@ -34,7 +34,7 @@ export const DEFAULT_CHANNELS: Channel[] = [
   },
 ];
 
-export const DEFAULT_CHANNEL_ID = DEFAULT_CHANNELS[0]?.id ?? "ryos-picks";
+export const DEFAULT_CHANNEL_ID = DEFAULT_CHANNELS[0]?.id ?? "midicode-picks";
 
 /** Built-ins first, then custom channels; channel numbers are list order (1-based). */
 export function buildTvChannelLineup(

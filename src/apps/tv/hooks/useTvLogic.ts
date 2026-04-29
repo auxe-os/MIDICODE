@@ -20,7 +20,7 @@ import {
 import { isMobileSafari } from "@/utils/device";
 
 export const MTV_CHANNEL_ID = "mtv";
-export const RYO_TV_CHANNEL_ID = "ryos-picks";
+export const RYO_TV_CHANNEL_ID = "midicode-picks";
 
 function trackToVideo(track: Track): Video {
   return {

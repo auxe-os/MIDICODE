@@ -6,7 +6,7 @@ import {
 } from "@/utils/syncLogicalDomains";
 import { type CloudSyncDomain } from "@/utils/cloudSyncShared";
 
-const STORAGE_KEY = "ryos:cloud-sync:logical-dirty-parts";
+const STORAGE_KEY = "midicode:cloud-sync:logical-dirty-parts";
 
 type LogicalDirtyState = Partial<Record<LogicalCloudSyncDomain, CloudSyncDomain[]>>;
 

@@ -372,7 +372,7 @@ const getSystemState = () => {
         videoCount:
           tvCurrentEntry.ch.id === "mtv"
             ? ipodStore.tracks.length
-            : tvCurrentEntry.ch.id === "ryos-picks"
+            : tvCurrentEntry.ch.id === "midicode-picks"
             ? videoStore.videos.length
             : tvCurrentEntry.ch.videos.length,
       }

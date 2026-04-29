@@ -831,7 +831,7 @@ export function useAdminLogic({ isWindowOpen }: UseAdminLogicProps) {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `ryos-library-${
+      link.download = `midicode-library-${
         new Date().toISOString().split("T")[0]
       }.json`;
       document.body.appendChild(link);

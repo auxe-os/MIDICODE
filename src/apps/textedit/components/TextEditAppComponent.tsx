@@ -320,7 +320,7 @@ function TextEditContent({
       setHasUnsavedChanges(false);
 
       // Check both new and legacy keys
-      const pendingFileOpen = localStorage.getItem("ryos:pending-file-open") || 
+      const pendingFileOpen = localStorage.getItem("midicode:pending-file-open") || 
                               localStorage.getItem("pending_file_open");
       if (pendingFileOpen) {
         try {
@@ -340,7 +340,7 @@ function TextEditContent({
         } catch (e) {
           console.error("Failed to parse pending file open data:", e);
         } finally {
-          localStorage.removeItem("ryos:pending-file-open");
+          localStorage.removeItem("midicode:pending-file-open");
           localStorage.removeItem("pending_file_open");
         }
       }

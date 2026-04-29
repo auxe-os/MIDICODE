@@ -1,4 +1,4 @@
-const STORAGE_KEY = "ryos:listen-client-instance";
+const STORAGE_KEY = "midicode:listen-client-instance";
 
 function randomId(): string {
   const bytes = new Uint8Array(12);

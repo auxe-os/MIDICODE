@@ -56,7 +56,7 @@ async function ensureLegacyCss(theme: OsThemeId) {
 }
 
 // Storage keys
-const THEME_KEY = "ryos:theme";
+const THEME_KEY = "midicode:theme";
 const LEGACY_THEME_KEY = "os_theme";
 
 const createThemeStore = () => create<ThemeState>((set) => ({

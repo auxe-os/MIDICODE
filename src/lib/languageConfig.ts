@@ -16,8 +16,8 @@ export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export const DEFAULT_LANGUAGE: SupportedLanguage = "en";
 
 // Storage keys
-const LANGUAGE_KEY = "ryos:language";
-const LANGUAGE_INITIALIZED_KEY = "ryos:language-initialized";
+const LANGUAGE_KEY = "midicode:language";
+const LANGUAGE_INITIALIZED_KEY = "midicode:language-initialized";
 const LEGACY_LANGUAGE_KEY = "ryos_language";
 const LEGACY_LANGUAGE_INITIALIZED_KEY = "ryos_language_initialized";
 

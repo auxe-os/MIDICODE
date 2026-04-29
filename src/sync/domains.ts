@@ -448,7 +448,7 @@ function serializeSettingsSnapshot(): SettingsSnapshotData {
     theme: useThemeStore.getState().current,
     language: useLanguageStore.getState().current,
     languageInitialized:
-      localStorage.getItem("ryos:language-initialized") === "true",
+      localStorage.getItem("midicode:language-initialized") === "true",
     aiModel: useAppStore.getState().aiModel,
     display: {
       displayMode: displayState.displayMode,
@@ -873,7 +873,7 @@ async function applySettingsSnapshot(
     if (sectionsToApply.includes("language")) {
       try {
         localStorage.setItem(
-          "ryos:language-initialized",
+          "midicode:language-initialized",
           normalizedData.languageInitialized ? "true" : "false"
         );
         await useLanguageStore.getState().setLanguage(normalizedData.language);

@@ -69,7 +69,7 @@ export function useDragAndDrop({
     if (hasUnsavedChanges) {
       // Store the dropped file temporarily
       localStorage.setItem(
-        "ryos:pending-file-open",
+        "midicode:pending-file-open",
         JSON.stringify({
           path: filePath,
           content: content,

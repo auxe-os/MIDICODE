@@ -246,7 +246,7 @@ export function AppManager({ apps }: AppManagerProps) {
 
       // Store initialPath if provided
       if (initialPath) {
-        localStorage.setItem(`ryos:app:${appId}:initial-path`, initialPath);
+        localStorage.setItem(`midicode:app:${appId}:initial-path`, initialPath);
       }
 
       // If there was an existing instance and we have initialData, dispatch updateApp event

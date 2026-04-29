@@ -80,7 +80,7 @@ export const useAudioSettingsStore = create<AudioSettingsState>()(
       setSynthPreset: (v) => set({ synthPreset: v }),
     }),
     {
-      name: "ryos:audio-settings",
+      name: "midicode:audio-settings",
       version: STORE_VERSION,
       partialize: (state) => ({
         masterVolume: state.masterVolume,

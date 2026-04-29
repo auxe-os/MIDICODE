@@ -39,7 +39,7 @@ interface FinderStoreState {
   getForegroundInstance: () => FinderInstance | null;
 }
 
-const STORE_NAME = "ryos:finder";
+const STORE_NAME = "midicode:finder";
 
 export const useFinderStore = create<FinderStoreState>()(
   persist(

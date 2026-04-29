@@ -277,7 +277,7 @@ export const useDisplaySettingsStore = create<DisplaySettingsState>()(
         set((s) => ({ customWallpapersRevision: s.customWallpapersRevision + 1 })),
     }),
     {
-      name: "ryos:display-settings",
+      name: "midicode:display-settings",
       version: STORE_VERSION,
       partialize: (state) => ({
         displayMode: state.displayMode,

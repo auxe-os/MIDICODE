@@ -87,7 +87,7 @@ export const usePcStore = create<PcStoreState>()(
       setGames: (games) => set({ games }),
     }),
     {
-      name: "ryos:pc",
+      name: "midicode:pc",
       version: 6,
       partialize: (state) => ({ games: state.games }),
       migrate: () => {

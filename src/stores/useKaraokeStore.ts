@@ -205,7 +205,7 @@ export const useKaraokeStore = create<KaraokeState>()(
       setTotalTime: (time) => set({ totalTime: time }),
     }),
     {
-      name: "ryos:karaoke",
+      name: "midicode:karaoke",
       version: CURRENT_KARAOKE_STORE_VERSION,
       partialize: (state) => ({
         currentSongId: state.currentSongId,

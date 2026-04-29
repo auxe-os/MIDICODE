@@ -11,7 +11,7 @@ export interface RuntimeCrashTestDetail {
   message?: string;
 }
 
-export const RYOS_ERROR_BOUNDARY_TEST_EVENT = "ryos:error-boundary-test";
+export const RYOS_ERROR_BOUNDARY_TEST_EVENT = "midicode:error-boundary-test";
 
 export interface RuntimeCrashContext {
   scope: RuntimeCrashScope;
@@ -84,7 +84,7 @@ export function reportRuntimeCrash(
     theme: report.theme,
   };
 
-  console.error("[ryOS] Runtime crash caught by error boundary", {
+  console.error("[MIDICODE] Runtime crash caught by error boundary", {
     ...analyticsPayload,
     componentStack: report.componentStack,
     error,
@@ -98,14 +98,14 @@ export function reportRuntimeCrash(
       analyticsPayload,
     );
   } catch (analyticsError) {
-    console.error("[ryOS] Failed to track runtime crash analytics", analyticsError);
+    console.error("[MIDICODE] Failed to track runtime crash analytics", analyticsError);
   }
 
   const reporter = getRuntimeErrorReporter();
   if (reporter) {
     void Promise.resolve(reporter.reportError(report)).catch(
       (reporterError: unknown) => {
-        console.error("[ryOS] Optional error reporter failed", reporterError);
+        console.error("[MIDICODE] Optional error reporter failed", reporterError);
       },
     );
   }
@@ -114,7 +114,7 @@ export function reportRuntimeCrash(
     try {
       window.reportError(error);
     } catch (browserError) {
-      console.error("[ryOS] window.reportError failed", browserError);
+      console.error("[MIDICODE] window.reportError failed", browserError);
     }
   }
 }

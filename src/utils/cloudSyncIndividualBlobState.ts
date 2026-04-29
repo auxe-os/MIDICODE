@@ -14,7 +14,7 @@ interface IndividualBlobSyncState {
   "custom-wallpapers": IndividualBlobKnownItemMap;
 }
 
-const STORAGE_KEY = "ryos:cloud-sync:individual-blob-state";
+const STORAGE_KEY = "midicode:cloud-sync:individual-blob-state";
 
 function createEmptyIndividualBlobSyncState(): IndividualBlobSyncState {
   return {

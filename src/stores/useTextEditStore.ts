@@ -98,7 +98,7 @@ export const useTextEditStore = create<TextEditStoreState>()(
       },
     }),
     {
-      name: "ryos:textedit",
+      name: "midicode:textedit",
       partialize: (state) => ({
         instances: Object.fromEntries(
           Object.entries(state.instances).map(([id, inst]) => {

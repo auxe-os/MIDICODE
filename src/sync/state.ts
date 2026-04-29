@@ -3,11 +3,11 @@ import {
   type CloudSyncDomain,
 } from "@/utils/cloudSyncShared";
 
-const CLIENT_ID_STORAGE_KEY = "ryos:cloud-sync:client-id";
-const CLIENT_VERSION_STORAGE_KEY = "ryos:cloud-sync:client-versions";
-const LOCAL_CHANGE_STORAGE_KEY = "ryos:cloud-sync:last-local-change-at";
+const CLIENT_ID_STORAGE_KEY = "midicode:cloud-sync:client-id";
+const CLIENT_VERSION_STORAGE_KEY = "midicode:cloud-sync:client-versions";
+const LOCAL_CHANGE_STORAGE_KEY = "midicode:cloud-sync:last-local-change-at";
 const SETTINGS_TIMESTAMP_STORAGE_KEY =
-  "ryos:cloud-sync:settings-section-timestamps";
+  "midicode:cloud-sync:settings-section-timestamps";
 
 export const SETTINGS_SYNC_SECTIONS = [
   "theme",

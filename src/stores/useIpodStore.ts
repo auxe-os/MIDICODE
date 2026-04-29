@@ -20,7 +20,7 @@ import { abortableFetch } from "@/utils/abortableFetch";
 import { emitCloudSyncDomainChange } from "@/utils/cloudSyncEvents";
 import { sortTracksLikeServerOrder } from "@/stores/ipodTrackOrder";
 
-/** Special value for lyricsTranslationLanguage that means "use ryOS locale" */
+/** Special value for lyricsTranslationLanguage that means "use MIDICODE locale" */
 export const LYRICS_TRANSLATION_AUTO = "auto";
 
 /** Lyrics source from Kugou */
@@ -1519,7 +1519,7 @@ export const useIpodStore = create<IpodState>()(
       setTotalTime: (time) => set({ totalTime: time }),
     }),
     {
-      name: "ryos:ipod", // Unique name for localStorage persistence
+      name: "midicode:ipod", // Unique name for localStorage persistence
       version: CURRENT_IPOD_STORE_VERSION, // Set the current version
       partialize: (state) => ({
         tracks: state.tracks,
@@ -1662,7 +1662,7 @@ export const useIpodStore = create<IpodState>()(
 
 /**
  * Resolves the effective translation language.
- * If the stored value is "auto", returns the current ryOS locale language.
+ * If the stored value is "auto", returns the current MIDICODE locale language.
  * If null, returns null (meaning no translation / "Original").
  * Otherwise returns the stored language code.
  */

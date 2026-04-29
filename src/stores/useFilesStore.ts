@@ -523,7 +523,7 @@ async function saveDefaultContents(
 const getEmptyFileSystemState = (): Record<string, FileSystemItem> => ({});
 
 const STORE_VERSION = 13; // System 7: show Chats, IE, Karaoke on desktop after iPod
-const STORE_NAME = "ryos:files";
+const STORE_NAME = "midicode:files";
 
 const DEFAULT_APPLICATIONS_FOLDER_ALIAS_NAME = "Applications";
 

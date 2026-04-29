@@ -113,7 +113,7 @@ function BoundaryTestCrash({
         }
       }
 
-      setMessage(detail.message ?? `[ryOS] Simulated ${scope} crash`);
+      setMessage(detail.message ?? `[MIDICODE] Simulated ${scope} crash`);
     };
 
     window.addEventListener(

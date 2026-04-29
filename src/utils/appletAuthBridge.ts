@@ -1,4 +1,4 @@
-export const APPLET_AUTH_MESSAGE_TYPE = "ryos-applet-auth";
+export const APPLET_AUTH_MESSAGE_TYPE = "midicode-applet-auth";
 
 /**
  * Injected into applet iframes. Requests the parent's username for
@@ -43,7 +43,7 @@ export const APPLET_AUTH_BRIDGE_SCRIPT = `
           );
         }
       } catch (err) {
-        console.warn("[ryOS] Applet auth request failed:", err);
+        console.warn("[MIDICODE] Applet auth request failed:", err);
       }
     };
 

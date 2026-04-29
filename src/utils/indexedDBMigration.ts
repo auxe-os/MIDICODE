@@ -6,8 +6,8 @@ import { STORES, ensureIndexedDBInitialized } from "@/utils/indexedDB";
 import { useFilesStore } from "@/stores/useFilesStore";
 
 // Check if migration has been completed
-const MIGRATION_KEY = "ryos:indexeddb-uuid-migration-v1";
-const BACKUP_KEY = "ryos:indexeddb-backup";
+const MIGRATION_KEY = "midicode:indexeddb-uuid-migration-v1";
+const BACKUP_KEY = "midicode:indexeddb-backup";
 
 // Backup all data before schema migration
 async function backupDataBeforeMigration() {

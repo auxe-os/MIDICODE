@@ -1509,7 +1509,7 @@ export function useIpodLogic({
     };
   }, [lyricsSourceOverride]);
 
-  // Resolve "auto" translation language to actual ryOS locale
+  // Resolve "auto" translation language to actual MIDICODE locale
   const effectiveTranslationLanguage = useMemo(
     () => getEffectiveTranslationLanguage(lyricsTranslationLanguage),
     [lyricsTranslationLanguage]

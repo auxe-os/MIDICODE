@@ -271,7 +271,7 @@ export const useVideoStore = create<VideoStoreState>()(
       },
     }),
     {
-      name: "ryos:videos",
+      name: "midicode:videos",
       version: CURRENT_VIDEO_STORE_VERSION,
       migrate: () => {
         console.log(

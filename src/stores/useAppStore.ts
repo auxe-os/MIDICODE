@@ -100,7 +100,7 @@ interface AppStoreState {
   exposeMode: boolean;
   setExposeMode: (v: boolean) => void;
   
-  // ryOS version (fetched from version.json)
+  // MIDICODE version (fetched from version.json)
   ryOSVersion: string | null;
   ryOSBuildNumber: string | null;
   ryOSBuildTime: string | null;
@@ -139,7 +139,7 @@ const createUseAppStore = () =>
       exposeMode: false,
       setExposeMode: (v) => set({ exposeMode: v }),
 
-      // ryOS version (fetched from version.json)
+      // MIDICODE version (fetched from version.json)
       ryOSVersion: null,
       ryOSBuildNumber: null,
       ryOSBuildTime: null,
@@ -674,7 +674,7 @@ const createUseAppStore = () =>
       },
       }),
       {
-        name: "ryos:app-store",
+        name: "midicode:app-store",
         version: CURRENT_APP_STORE_VERSION,
         partialize: (state): Partial<AppStoreState> => ({
         version: state.version,

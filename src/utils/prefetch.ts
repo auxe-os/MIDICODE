@@ -22,8 +22,8 @@ import { getApiUrl, isTauri } from "@/utils/platform";
 import { abortableFetch } from "@/utils/abortableFetch";
 
 // Storage key for manifest timestamp (for cache invalidation)
-const MANIFEST_KEY = 'ryos:manifest-timestamp';
-const LEGACY_MANIFEST_KEY = 'ryos-manifest-timestamp';
+const MANIFEST_KEY = 'midicode:manifest-timestamp';
+const LEGACY_MANIFEST_KEY = 'midicode-manifest-timestamp';
 
 // Periodic update check interval (5 minutes)
 const UPDATE_CHECK_INTERVAL = 5 * 60 * 1000;
@@ -44,8 +44,8 @@ if (import.meta.hot) {
 let isUpdateInProgress = false;
 
 // Reload loop detection — shared keys with index.html and main.tsx
-const RELOAD_COUNT_KEY = 'ryos:reload-count';
-const RELOAD_WINDOW_KEY = 'ryos:reload-window-start';
+const RELOAD_COUNT_KEY = 'midicode:reload-count';
+const RELOAD_WINDOW_KEY = 'midicode:reload-window-start';
 const MAX_RELOADS_PER_WINDOW = 3;
 const RELOAD_WINDOW_MS = 60_000; // 1 minute
 
@@ -865,7 +865,7 @@ export function initPrefetch(): void {
     window.history.replaceState({}, '', url.toString());
     // Clear the stale reload flag since we successfully loaded fresh content
     try {
-      sessionStorage.removeItem('ryos-stale-reload');
+      sessionStorage.removeItem('midicode-stale-reload');
     } catch {
       // sessionStorage might not be available
     }

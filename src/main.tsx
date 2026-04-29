@@ -27,7 +27,7 @@ primeReactResources();
 // ============================================================================
 try {
   if (new URL(window.location.href).searchParams.has("_cb")) {
-    sessionStorage.removeItem("ryos-stale-reload");
+    sessionStorage.removeItem("midicode-stale-reload");
   }
 } catch {
   // URL parsing or sessionStorage may throw in edge cases
@@ -50,24 +50,24 @@ try {
 let isPreloadReloading = false;
 
 const handlePreloadError = (event: Event) => {
-  console.warn("[ryOS] Chunk load failed:", event);
+  console.warn("[MIDICODE] Chunk load failed:", event);
 
   if (isPreloadReloading) return;
 
   if (!navigator.onLine) {
-    console.warn("[ryOS] Skipping reload - device is offline");
+    console.warn("[MIDICODE] Skipping reload - device is offline");
     return;
   }
 
   // Counter-based loop guard (shared with index.html and prefetch.ts)
-  const countKey = "ryos:reload-count";
-  const windowKey = "ryos:reload-window-start";
+  const countKey = "midicode:reload-count";
+  const windowKey = "midicode:reload-window-start";
   try {
     const now = Date.now();
     const count = parseInt(sessionStorage.getItem(countKey) || "0", 10);
     const wStart = parseInt(sessionStorage.getItem(windowKey) || "0", 10);
     if (wStart && now - wStart <= 60000 && count >= 3) {
-      console.warn("[ryOS] Too many reloads (" + count + "), stopping to prevent loop");
+      console.warn("[MIDICODE] Too many reloads (" + count + "), stopping to prevent loop");
       return;
     }
     if (!wStart || now - wStart > 60000) {
@@ -80,18 +80,18 @@ const handlePreloadError = (event: Event) => {
     // sessionStorage may throw
   }
 
-  const reloadKey = "ryos-stale-reload";
+  const reloadKey = "midicode-stale-reload";
   const lastReload = sessionStorage.getItem(reloadKey);
   const now = Date.now();
 
   if (lastReload && now - parseInt(lastReload, 10) < 10000) {
-    console.warn("[ryOS] Recently reloaded for stale bundle, skipping to prevent loop");
+    console.warn("[MIDICODE] Recently reloaded for stale bundle, skipping to prevent loop");
     return;
   }
 
   isPreloadReloading = true;
   sessionStorage.setItem(reloadKey, String(now));
-  console.log("[ryOS] Stale chunk detected — clearing caches and reloading...");
+  console.log("[MIDICODE] Stale chunk detected — clearing caches and reloading...");
 
   const doNavigate = () => {
     const url = new URL(window.location.href);
@@ -151,7 +151,7 @@ const bootstrap = async () => {
   try {
     await initializeI18n();
   } catch (error) {
-    console.error("[ryOS] Failed to initialize i18n during bootstrap:", error);
+    console.error("[MIDICODE] Failed to initialize i18n during bootstrap:", error);
   }
 
   // Hydrate theme and language from localStorage before rendering
@@ -160,7 +160,7 @@ const bootstrap = async () => {
   try {
     await useLanguageStore.getState().hydrate();
   } catch (error) {
-    console.error("[ryOS] Failed to hydrate language store:", error);
+    console.error("[MIDICODE] Failed to hydrate language store:", error);
   }
 
   // ============================================================================

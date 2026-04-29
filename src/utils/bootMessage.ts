@@ -1,5 +1,5 @@
-export const BOOT_MESSAGE_KEY = "ryos:nextBootMessage";
-export const BOOT_DEBUG_KEY = "ryos:bootDebugMode";
+export const BOOT_MESSAGE_KEY = "midicode:nextBootMessage";
+export const BOOT_DEBUG_KEY = "midicode:bootDebugMode";
 
 export const setNextBootMessage = (message: string, debugMode = false): void => {
   try {

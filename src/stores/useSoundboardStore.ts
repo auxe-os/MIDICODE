@@ -45,7 +45,7 @@ export interface SoundboardStoreState {
 }
 
 const SOUNDBOARD_STORE_VERSION = 1;
-const SOUNDBOARD_STORE_NAME = "ryos:soundboard";
+const SOUNDBOARD_STORE_NAME = "midicode:soundboard";
 
 export const useSoundboardStore = create<SoundboardStoreState>()(
   persist(

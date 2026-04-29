@@ -250,7 +250,7 @@ export const useInfiniteMacStore = create<InfiniteMacStoreState>()(
       },
     }),
     {
-      name: "ryos:infinite-mac",
+      name: "midicode:infinite-mac",
       version: 1,
       // Only persist the scale preference, not runtime state
       partialize: (state) => ({ scale: state.scale }),

@@ -340,7 +340,7 @@ function getFileIcon(item: FileSystemItem): string {
 
 // --- Global flags for cross-instance coordination --- //
 // Use localStorage to persist initialization state across page refreshes
-const UUID_MIGRATION_KEY = "ryos:indexeddb-uuid-migration-v1";
+const UUID_MIGRATION_KEY = "midicode:indexeddb-uuid-migration-v1";
 
 // Check localStorage for completion status
 const isUUIDMigrationDone = () =>
@@ -1906,7 +1906,7 @@ export function useFileSystem(
       // Clear the migration flag so UUID migration will run again after reset
       localStorage.removeItem(UUID_MIGRATION_KEY);
       // Clear the size/timestamp sync flag so it will run again after reset
-      localStorage.removeItem("ryos:file-size-timestamp-sync-v1");
+      localStorage.removeItem("midicode:file-size-timestamp-sync-v1");
 
       // Reset metadata store (this will trigger re-initialization with new UUIDs)
       resetFilesStore();
@@ -1939,7 +1939,7 @@ export function useFileSystem(
   useEffect(() => {
     const syncFileSizesAndTimestamps = async () => {
       // Check if we've already done this sync
-      const syncKey = "ryos:file-size-timestamp-sync-v1";
+      const syncKey = "midicode:file-size-timestamp-sync-v1";
       if (localStorage.getItem(syncKey)) {
         return;
       }

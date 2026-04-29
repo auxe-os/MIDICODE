@@ -874,7 +874,7 @@ export const useInternetExplorerStore = create<InternetExplorerStore>()(
       updateBrowserState: () => {},
     }),
     {
-      name: "ryos:internet-explorer",
+      name: "midicode:internet-explorer",
       version: CURRENT_IE_STORE_VERSION,
       partialize: (state) => ({
         url: state.url,

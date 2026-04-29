@@ -300,7 +300,7 @@ export const useTvStore = create<TvStoreState>()(
         }),
     }),
     {
-      name: "ryos:tv",
+      name: "midicode:tv",
       version: 4,
       migrate: (persisted, version) => {
         const state = persisted as { customChannels?: CustomChannel[] };
