@@ -239,10 +239,9 @@ Common endpoint configurations in this AI stack:
 
 - **Proactive greetings**: `/api/chat` supports a proactive greeting mode for logged-in users with memories. Uses `gemini-3-flash-preview` to generate a short, context-aware greeting referencing recent activity or memories. Triggers background daily-note processing on each greeting.
 - **Telegram bot DM chat**: `/api/webhooks/telegram` enables private Telegram DM conversations with Ryo. Supports image attachments (downloaded and injected as multimodal content), web search, and server-side tool execution (memory, calendar, stickies, contacts, documents). Users link accounts via `/api/telegram/link/*` endpoints. Includes per-user burst and account-window rate limiting.
-- **Telegram heartbeat insights**: `/api/cron/telegram-heartbeat` runs on a 30-minute cron schedule. Analyzes today's daily notes, recent Telegram conversation, and heartbeat history to decide whether to proactively message the user. Processes daily notes and extracts memories from new chat messages before each decision. Uses gating logic to avoid redundant or stale nudges.
+- **Telegram heartbeat insights**: `/api/cron/telegram-heartbeat` runs on a daily cron schedule in the deployed Vercel Hobby configuration. Analyzes today's daily notes, recent Telegram conversation, and heartbeat history to decide whether to proactively message the user. Processes daily notes and extracts memories from new chat messages before each decision. Uses gating logic to avoid redundant or stale nudges.
 - **Web search**: Authenticated users get a search tool based on the selected model: `web_search` (OpenAI) for `gpt-5.4` with geolocation context, or `google_search` (Google) for `gemini-3-flash`. Anonymous users do not get search tools.
 - **Chat-room auto replies**: `/api/ai/ryo-reply` generates room messages as `ryo` with dedicated rate limits.
 - **Applet multimodal AI**: `/api/applet-ai` supports text chat, image attachments in message history, and binary image generation responses.
 - **Infinite Mac visual loop**: `infiniteMacControl` can return screenshots for model-visible state inspection.
 - **Internet Explorer caching**: `/api/ie-generate` stores cleaned generated HTML snapshots in Redis for recent-history retrieval.
-

@@ -5,7 +5,7 @@ import type { TelegramConversationMessage } from "./telegram-link.js";
 export const TELEGRAM_HEARTBEAT_TARGET_USERNAME = "ryo";
 export const TELEGRAM_HEARTBEAT_INTERVAL_MINUTES = 30;
 export const TELEGRAM_HEARTBEAT_CRON_PATH = "/api/cron/telegram-heartbeat";
-export const TELEGRAM_HEARTBEAT_CRON_SCHEDULE = "*/30 * * * *";
+export const TELEGRAM_HEARTBEAT_CRON_SCHEDULE = "0 8 * * *";
 export const TELEGRAM_HEARTBEAT_SLOT_TTL_SECONDS = 7 * 24 * 60 * 60;
 export const TELEGRAM_HEARTBEAT_TIME_ZONE = "America/Los_Angeles";
 export const TELEGRAM_HEARTBEAT_TOPIC = "telegram-heartbeat";

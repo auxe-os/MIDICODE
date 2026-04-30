@@ -662,7 +662,7 @@ describe("telegram heartbeat helpers", () => {
 });
 
 describe("vercel cron wiring", () => {
-  test("registers the telegram heartbeat cron every 30 minutes", async () => {
+  test("registers the telegram heartbeat cron once per day", async () => {
     const config = await Bun.file(new URL("../vercel.json", import.meta.url)).json();
     expect(config).toHaveProperty("crons");
 
