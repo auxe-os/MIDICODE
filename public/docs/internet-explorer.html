@@ -314,6 +314,12 @@
 <h2>User Guide</h2>
 <h3>Getting Started</h3>
 To launch Internet Explorer, click its icon in the ryOS desktop environment. Once open, you can immediately begin browsing by typing a URL into the address bar and pressing Enter. Explore the unique features by interacting with the time selection dropdown and navigation buttons.
+<h3>Local Development Requirements</h3>
+Internet Explorer depends on the local API even for standard browsing flows. Current-year navigation and embeddability checks go through the <code>/api/iframe-check</code> backend route, so <code>bun run dev:vite</code> by itself is not enough for full local IE testing.
+<h4>Recommended local modes</h4>
+<ul><li><strong>Frontend-only UI smoke test:</strong> <code>bun run dev:vite</code><ul><li>Useful for opening the desktop and checking basic app chrome.</li><li>Internet Explorer navigation will be limited because <code>/api/*</code> routes are unavailable.</li></ul></li><li><strong>Full local IE testing:</strong> <code>bun run dev</code><ul><li>Starts both the standalone Bun API and the Vite frontend.</li><li>Requires Redis configuration in <code>.env.local</code>.</li></ul></li></ul>
+<h4>Time-travel generation requirements</h4>
+<ul><li><strong>Redis</strong> for caching and generated timeline support</li><li><strong>AI provider key</strong> such as <code>OPENAI_API_KEY</code> for generated pre-1996 and future pages</li></ul>
 <h3>Key Actions</h3>
 <ul><li><strong>Navigating to a Website</strong>: Type your desired URL into the address bar at the top of the window and press <code>Enter</code> or click the "Go" button.</li><li><strong>Moving Between Pages</strong>: Use the "Back" and "Forward" arrow buttons to navigate through your browsing history. The "Refresh" button reloads the current page, and the "Stop" button halts page loading.</li><li><strong>Traveling Through Time</strong>: Locate the year dropdown menu, typically near the address bar. Select a year to load the current website as it appeared (or is imagined to appear) in that specific time.</li><li><strong>Saving Favorite Views</strong>: While on a page and in a specific year you wish to remember, click the "Star" icon to add it to your Favorites bar for quick recall.</li><li><strong>Discovering Site Snapshots</strong>: Click the "Clock" icon next to the address bar to view a timeline of available "Time Nodes" for the current website, offering different historical or future versions.</li><li><strong>Sharing Your Discoveries</strong>: To share a specific web page and its temporal view, click the "Share" button. This will generate a direct link that others can use to see exactly what you're seeing.</li></ul>
 <h3>Tips & Shortcuts</h3>
@@ -329,6 +335,8 @@ The app consists of 4 component file(s):
 <ul><li><code><a href="https://github.com/ryokun6/ryos/blob/main/src/apps/internet-explorer/hooks/useAiGeneration.ts" target="_blank" rel="noopener noreferrer" style="color: #00f; text-decoration: underline;">src/apps/internet-explorer/hooks/useAiGeneration.ts</a></code>: A custom hook responsible for interfacing with the AI backend to reconstruct historical web pages and generate future web content.</li></ul>
 <h3>State Management</h3>
 Internet Explorer utilizes Zustand for its global state management. This includes managing the current URL, selected year, browsing history, user favorites, and settings related to AI generation and display. Local component state is used for UI interactions within individual components.
+<h3>Backend Dependencies</h3>
+<ul><li><code>/api/iframe-check</code> handles embeddability checks, proxying, and local navigation safety.</li><li><code>/api/ie-generate</code> powers AI-assisted historical and speculative page generation.</li><li>Redis-backed caching improves repeated timeline requests and generated-page retrieval.</li></ul>
 <h2>Related Apps</h2>
 <ul><li><strong><a href="/docs/terminal">Terminal</a></strong>: For advanced users, the Terminal could be used to fetch raw web data or interact with web services, complementing the graphical browsing experience.</li></ul><ul><li><strong><a href="/docs/textedit">TextEdit</a></strong>: Users can easily copy and paste content, or even generated share links, from Internet Explorer into the TextEdit app for personal archiving or project documentation.</li></ul>
       </article>

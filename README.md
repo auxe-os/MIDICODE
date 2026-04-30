@@ -98,6 +98,14 @@ REDIS_KV_REST_API_TOKEN=...
 
 Without Redis, `bun run dev` will fail during API startup, but `bun run dev:vite` will still work for frontend-only development.
 
+### App-specific local dev notes
+
+- `Internet Explorer` is not fully frontend-only. Even normal browsing uses the local API through `/api/iframe-check`, so use `bun run dev` when you want IE navigation to work locally.
+- `Internet Explorer` time-travel generation needs additional backend services:
+  - Redis for cached/generated timeline flows
+  - an AI provider key such as `OPENAI_API_KEY` for generated past/future pages
+- `iPod` UI works in frontend-only mode, but library syncing, imported song metadata, and other server-backed media flows are most reliable with the full stack running.
+
 ### Minimum viable local envs
 
 Frontend only:

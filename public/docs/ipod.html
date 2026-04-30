@@ -314,10 +314,13 @@
 <h2>User Guide</h2>
 <h3>Getting Started</h3>
 To begin using the iPod app, simply launch it from your ryOS desktop. The app will open to its default menu screen, replicating the classic iPod interface. Use the interactive click wheel to navigate through options and start building your music library.
+<h3>Local Development Notes</h3>
+<ul><li><code>bun run dev:vite</code> is enough to verify the window, screen, themes, and click-wheel interface locally.</li><li><code>bun run dev</code> is recommended when you want the API-backed library flows to behave like the full app.</li><li>Features that depend on shared song metadata, syncing, or server-backed media flows are most reliable with Redis configured and the standalone API running.</li></ul>
 <h3>Key Actions</h3>
 <ul><li><strong>Adding Music:</strong> Select the "Add Songs" option from the main menu and paste a YouTube URL into the prompt to import a new track into your library.</li><li><strong>Browsing Your Library:</strong> Navigate to "Music" using the click wheel to explore your saved songs, artists, and albums. Use Cover Flow for a visually engaging browsing experience.</li><li><strong>Controlling Playback:</strong> While a song is playing, use the central play/pause button, and the skip buttons on the click wheel to manage your listening.</li><li><strong>Accessing Lyrics:</strong> During playback, select the lyrics option to view synchronized lyrics, with options for translations and phonetic aids.</li><li><strong>Adjusting Settings:</strong> Access display and playback mode settings through the main menu to customize your iPod's appearance and playback behavior.</li></ul>
 <h3>Tips & Shortcuts</h3>
 The click wheel is your primary interaction method; treat it like a physical iPod wheel for navigation. The central button acts as 'select,' while the outer ring allows scrolling through lists and options. Look for visual cues on the screen to understand current menu options and selected items.
+<p>The wheel is available across the classic, black, and U2 themes. In the classic theme, the wheel intentionally uses higher-contrast shading so the navigation ring and center button remain readable against the white body.</p>
 <h2>Technical Details</h2>
 <h3>Window Configuration</h3>
 <ul><li>Default size: 300×480px</li><li>Minimum size: 300×480px</li></ul>
@@ -331,6 +334,8 @@ The app consists of 14 component file(s):
 No dedicated utility files are listed for this application.
 <h3>State Management</h3>
 The iPod app leverages Zustand for robust state management, utilizing several stores including <code>useIpodStore</code> for core music library and playback state, <code>useAudioSettingsStore</code> for audio preferences, <code>useThemeStore</code> for visual themes, and <code>useAppStore</code> for general application-level settings. This ensures a consistent and reactive user experience across the application.
+<h3>Backend Dependencies</h3>
+<ul><li>Redis-backed song metadata powers the shared library and update checks.</li><li>Imported YouTube-based media flows rely on API routes and cached metadata.</li><li>Shared-library behavior overlaps with Karaoke and other media features through the same store and backend data sources.</li></ul>
 <h2>Related Apps</h2>
 <p>The iPod app integrates well with ryOS's system-wide <a href="/docs/audio-system">audio controls</a> for volume management. Users might also find the <a href="/docs/textedit">TextEdit</a> app useful for jotting down song ideas or creating custom playlists for later use.</p>
       </article>
