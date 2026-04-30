@@ -15,6 +15,66 @@ import IORedis from "ioredis";
 export type { Redis };
 
 export type RedisBackend = "upstash-rest" | "redis-url";
+type StandardRedisClient = {
+  get(key: string): Promise<string | null>;
+  set(...args: unknown[]): Promise<unknown>;
+  setnx(key: string, value: string): Promise<number>;
+  del(...keys: string[]): Promise<number>;
+  exists(...keys: string[]): Promise<number>;
+  expire(key: string, seconds: number): Promise<number>;
+  incr(key: string): Promise<number>;
+  ttl(key: string): Promise<number>;
+  scan(...args: Array<string | number>): Promise<[string, string[]]>;
+  pipeline(): {
+    get(key: string): unknown;
+    set(...args: unknown[]): unknown;
+    del(...keys: string[]): unknown;
+    sadd(key: string, ...members: string[]): unknown;
+    srem(key: string, ...members: string[]): unknown;
+    zremrangebyscore(key: string, min: number | string, max: number | string): unknown;
+    zcard(key: string): unknown;
+    hincrby(key: string, field: string, increment: number): unknown;
+    hgetall(key: string): unknown;
+    pfadd(key: string, ...elements: string[]): unknown;
+    pfcount(...keys: string[]): unknown;
+    expire(key: string, seconds: number): unknown;
+    exec(): Promise<Array<[unknown, unknown] | null>>;
+  };
+  smembers(key: string): Promise<unknown[]>;
+  sadd(key: string, ...members: string[]): Promise<number>;
+  srem(key: string, ...members: string[]): Promise<number>;
+  lpush(key: string, ...values: string[]): Promise<number>;
+  lrange(key: string, start: number, stop: number): Promise<unknown[]>;
+  ltrim(key: string, start: number, stop: number): Promise<string>;
+  lrem(key: string, count: number, value: string): Promise<number>;
+  llen(key: string): Promise<number>;
+  mget(...keys: string[]): Promise<Array<unknown | null>>;
+  hincrby(key: string, field: string, increment: number): Promise<number>;
+  hgetall(key: string): Promise<Record<string, string>>;
+  pfadd(key: string, ...elements: string[]): Promise<number>;
+  pfcount(...keys: string[]): Promise<number>;
+  publish(channel: string, message: string): Promise<number>;
+  subscribe(...channels: string[]): Promise<number>;
+  on(event: "message", listener: (channel: string, message: string) => void): void;
+  zadd(key: string, score: number, member: string): Promise<number>;
+  zrem(key: string, member: string): Promise<number>;
+  zremrangebyscore(
+    key: string,
+    min: number | string,
+    max: number | string
+  ): Promise<number>;
+  zrange(key: string, start: number, stop: number): Promise<string[]>;
+  zcard(key: string): Promise<number>;
+};
+const StandardRedisConstructor =
+  IORedis as unknown as new (
+    url: string,
+    options: {
+      maxRetriesPerRequest: null;
+      enableReadyCheck: boolean;
+      lazyConnect: boolean;
+    }
+  ) => StandardRedisClient;
 
 export interface RedisSetOptions {
   ex?: number;
@@ -61,7 +121,7 @@ export interface RedisLike {
     options?: RedisScanOptions
   ): Promise<[string | number, string[]]>;
   pipeline(): RedisPipelineLike;
-  smembers<T = string[]>(key: string): Promise<T>;
+  smembers(key: string): Promise<unknown[]>;
   sadd(key: string, ...members: string[]): Promise<number>;
   srem(key: string, ...members: string[]): Promise<number>;
   lpush(key: string, ...values: string[]): Promise<number>;
@@ -71,7 +131,7 @@ export interface RedisLike {
   llen(key: string): Promise<number>;
   mget<T = unknown>(...keys: string[]): Promise<(T | null)[]>;
   hincrby(key: string, field: string, increment: number): Promise<number>;
-  hgetall<T = Record<string, string>>(key: string): Promise<T | null>;
+  hgetall(key: string): Promise<Record<string, string> | null>;
   pfadd(key: string, ...elements: string[]): Promise<number>;
   pfcount(...keys: string[]): Promise<number>;
   zadd(key: string, entry: RedisSortedSetEntry): Promise<number>;
@@ -86,12 +146,12 @@ export interface RedisLike {
 }
 
 const redisClientCache = globalThis as typeof globalThis & {
-  __ryosStandardRedis?: IORedis;
+  __ryosStandardRedis?: StandardRedisClient;
 };
 
 const redisPubSubCache = globalThis as typeof globalThis & {
-  __ryosStandardRedisPub?: IORedis;
-  __ryosStandardRedisSub?: IORedis;
+  __ryosStandardRedisPub?: StandardRedisClient;
+  __ryosStandardRedisSub?: StandardRedisClient;
 };
 
 function getRedisUrl(): string | null {
@@ -153,7 +213,9 @@ function serializeRedisValue(value: unknown): string {
 }
 
 class StandardRedisPipelineAdapter implements RedisPipelineLike {
-  constructor(private readonly pipelineClient: ReturnType<IORedis["pipeline"]>) {}
+  constructor(
+    private readonly pipelineClient: ReturnType<StandardRedisClient["pipeline"]>
+  ) {}
 
   get(key: string): this {
     this.pipelineClient.get(key);
@@ -250,7 +312,7 @@ class StandardRedisPipelineAdapter implements RedisPipelineLike {
 }
 
 class StandardRedisAdapter implements RedisLike {
-  constructor(private readonly client: IORedis) {}
+  constructor(private readonly client: StandardRedisClient) {}
 
   async get<T = unknown>(key: string): Promise<T | null> {
     return (await this.client.get(key)) as T | null;
@@ -311,7 +373,9 @@ class StandardRedisAdapter implements RedisLike {
     if (typeof options?.count === "number") {
       args.push("COUNT", options.count);
     }
-    const [nextCursor, keys] = await this.client.scan(...args);
+    const [nextCursor, keys] = await this.client.scan(
+      ...(args as [string, ...Array<string | number>])
+    );
     return [nextCursor, keys];
   }
 
@@ -319,8 +383,8 @@ class StandardRedisAdapter implements RedisLike {
     return new StandardRedisPipelineAdapter(this.client.pipeline());
   }
 
-  async smembers<T = string[]>(key: string): Promise<T> {
-    return (await this.client.smembers(key)) as T;
+  async smembers(key: string): Promise<unknown[]> {
+    return await this.client.smembers(key);
   }
 
   async sadd(key: string, ...members: string[]): Promise<number> {
@@ -367,10 +431,10 @@ class StandardRedisAdapter implements RedisLike {
     return await this.client.hincrby(key, field, increment);
   }
 
-  async hgetall<T = Record<string, string>>(key: string): Promise<T | null> {
+  async hgetall(key: string): Promise<Record<string, string> | null> {
     const result = await this.client.hgetall(key);
     if (!result || Object.keys(result).length === 0) return null;
-    return result as T;
+    return result;
   }
 
   async pfadd(key: string, ...elements: string[]): Promise<number> {
@@ -408,7 +472,7 @@ class StandardRedisAdapter implements RedisLike {
   }
 }
 
-function getStandardRedisClient(): IORedis {
+function getStandardRedisClient(): StandardRedisClient {
   if (!redisClientCache.__ryosStandardRedis) {
     const redisUrl = getRedisUrl();
     if (!redisUrl) {
@@ -417,7 +481,7 @@ function getStandardRedisClient(): IORedis {
       );
     }
 
-    redisClientCache.__ryosStandardRedis = new IORedis(redisUrl, {
+    redisClientCache.__ryosStandardRedis = new StandardRedisConstructor(redisUrl, {
       maxRetriesPerRequest: null,
       enableReadyCheck: true,
       lazyConnect: false,
@@ -453,14 +517,16 @@ export function createRedis(): Redis {
   return new StandardRedisAdapter(getStandardRedisClient()) as unknown as Redis;
 }
 
-function getSharedPubSubClient(slot: "__ryosStandardRedisPub" | "__ryosStandardRedisSub"): IORedis {
+function getSharedPubSubClient(
+  slot: "__ryosStandardRedisPub" | "__ryosStandardRedisSub"
+): StandardRedisClient {
   const redisUrl = getRedisUrl();
   if (!redisUrl) {
     throw new Error("REDIS_URL is required for Redis pub/sub.");
   }
 
   if (!redisPubSubCache[slot]) {
-    redisPubSubCache[slot] = new IORedis(redisUrl, {
+    redisPubSubCache[slot] = new StandardRedisConstructor(redisUrl, {
       maxRetriesPerRequest: null,
       enableReadyCheck: true,
       lazyConnect: false,
@@ -474,14 +540,14 @@ export function supportsRedisPubSub(): boolean {
   return getRedisBackend() === "redis-url";
 }
 
-export function createRedisPublisher(): IORedis {
+export function createRedisPublisher(): StandardRedisClient {
   if (!supportsRedisPubSub()) {
     throw new Error("Redis pub/sub requires standard Redis mode (REDIS_URL).");
   }
   return getSharedPubSubClient("__ryosStandardRedisPub");
 }
 
-export function createRedisSubscriber(): IORedis {
+export function createRedisSubscriber(): StandardRedisClient {
   if (!supportsRedisPubSub()) {
     throw new Error("Redis pub/sub requires standard Redis mode (REDIS_URL).");
   }

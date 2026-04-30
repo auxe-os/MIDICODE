@@ -92,6 +92,6 @@ export async function touchSession(sessionId: string): Promise<void> {
 
 export async function getActiveSessionIds(): Promise<string[]> {
   const client = createRedisClient();
-  const sessionIds = await client.smembers<string[]>(LISTEN_SESSIONS_SET);
+  const sessionIds = (await client.smembers(LISTEN_SESSIONS_SET)) as string[];
   return sessionIds || [];
 }

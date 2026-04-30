@@ -75,8 +75,8 @@ class FakeRedis {
     return new FakeRedisPipeline(this);
   }
 
-  async smembers<T = string[]>(key: string): Promise<T> {
-    return Array.from(this.sets.get(key) || []) as T;
+  async smembers(key: string): Promise<unknown[]> {
+    return Array.from(this.sets.get(key) || []);
   }
 
   async sadd(key: string, ...members: string[]): Promise<number> {

@@ -230,11 +230,15 @@ export async function putLogicalCloudSyncDomain(
 
     if (!result.ok) {
       const metadata = await readLogicalCloudSyncMetadata(redis, username);
+      const errorResult = result as Extract<
+        PutPhysicalSyncDomainResult,
+        { ok: false }
+      >;
       return {
         ok: false,
-        status: result.status,
-        error: result.error,
-        ...(result.code ? { code: result.code } : {}),
+        status: errorResult.status,
+        error: errorResult.error,
+        ...(errorResult.code ? { code: errorResult.code } : {}),
         metadata: metadata[logicalDomain],
         partDomain,
       };
@@ -249,4 +253,3 @@ export async function putLogicalCloudSyncDomain(
     writes: results,
   };
 }
-

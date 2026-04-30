@@ -1,4 +1,4 @@
-import { createOgShareResponse } from "./api/_utils/og-share";
+import { createOgShareResponse } from "./api/_utils/og-share.js";
 
 export const config = {
   matcher: [

@@ -536,7 +536,7 @@ export function createChatTools(
           return executeSongLibraryControl(input, context);
         },
       },
-    } as Pick<typeof allTools, (typeof _TELEGRAM_TOOL_NAMES)[number]>;
+    };
   }
 
   return Object.fromEntries(

@@ -33,7 +33,7 @@ import type {
   CalendarSnapshotData,
   StickiesSnapshotData,
   ContactsSnapshotData,
-  type StickyColor,
+  StickyColor,
   SongLibraryControlInput,
   SongLibraryControlOutput,
   SongLibraryToolRecord,
@@ -1706,6 +1706,9 @@ export async function executeDocumentsControl(
       const content = input.content ?? "";
       const mode = input.mode || "overwrite";
       const existingItem = state.items[path];
+      const existingItemRecord = existingItem as
+        | Record<string, unknown>
+        | undefined;
       const existingIsDocument = isActiveDocument(existingItem);
 
       let baseContent = "";
@@ -1726,7 +1729,7 @@ export async function executeDocumentsControl(
           };
         }
         baseContent = currentContent ?? "";
-      } else if (existingItem?.isDirectory) {
+      } else if (existingItemRecord?.isDirectory === true) {
         return {
           success: false,
           message: `Path '${path}' is a directory, not a document.`,

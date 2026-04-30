@@ -95,12 +95,12 @@ export async function deleteIrcServer(id: string): Promise<void> {
  */
 export async function listIrcServers(): Promise<IrcServer[]> {
   const redis = getRedis();
-  let ids = (await redis.smembers<string[]>(IRC_SERVERS_SET)) || [];
+  let ids = ((await redis.smembers(IRC_SERVERS_SET)) as string[]) || [];
 
   if (!ids.includes(DEFAULT_SERVER_ID)) {
     const seed: IrcServer = { ...DEFAULT_SERVER, createdAt: Date.now() };
     await setIrcServer(seed);
-    ids = await redis.smembers<string[]>(IRC_SERVERS_SET);
+    ids = (await redis.smembers(IRC_SERVERS_SET)) as string[];
   }
 
   if (ids.length === 0) return [];

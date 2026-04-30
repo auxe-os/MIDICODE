@@ -56,7 +56,7 @@ export default apiHandler(
       tls: body.tls,
     });
 
-    if (!normalized.ok) {
+    if (normalized.ok === false) {
       logger.response(400, Date.now() - startTime);
       res.status(400).json({ error: normalized.error });
       return;

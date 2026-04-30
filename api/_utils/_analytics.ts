@@ -220,7 +220,9 @@ export async function getAnalyticsSummary(
     pipe.pfcount(k("uv", date));
   }
   // Cross-day unique visitors via HLL union (single PFCOUNT with N keys)
-  if (uvKeys.length > 0) pipe.pfcount(...uvKeys);
+  if (uvKeys.length > 0) {
+    pipe.pfcount(...(uvKeys as [string, ...string[]]));
+  }
   const results = await pipe.exec();
 
   let totalCalls = 0;
@@ -295,7 +297,9 @@ export async function getAnalyticsDetail(
     pipe.hgetall(k("st", date));
     pipe.hgetall(k("aiu", date));
   }
-  if (uvKeys.length > 0) pipe.pfcount(...uvKeys);
+  if (uvKeys.length > 0) {
+    pipe.pfcount(...(uvKeys as [string, ...string[]]));
+  }
   const results = await pipe.exec();
 
   let totalCalls = 0;

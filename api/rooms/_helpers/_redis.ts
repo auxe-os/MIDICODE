@@ -131,7 +131,7 @@ export async function roomExists(roomId: string): Promise<boolean> {
  */
 export async function getAllRoomIds(): Promise<string[]> {
   const client = createRedisClient();
-  let roomIds = await client.smembers<string[]>(CHAT_ROOMS_SET);
+  let roomIds = (await client.smembers(CHAT_ROOMS_SET)) as string[];
 
   if (!roomIds || roomIds.length === 0) {
     const discovered: string[] = [];
