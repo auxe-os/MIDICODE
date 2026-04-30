@@ -31,6 +31,7 @@ import { TERMINAL_ANALYTICS } from "@/utils/analytics";
 import i18n from "@/lib/i18n";
 import { CommandHistory, CommandContext, ToolInvocationData } from "../types";
 import { abortableFetch } from "@/utils/abortableFetch";
+import { getApiUrl } from "@/utils/platform";
 
 // Maximum number of rendered command entries to keep in memory
 const MAX_RENDERED_HISTORY = 200;
@@ -1079,7 +1080,7 @@ export const useTerminalLogic = ({
 
               // If password provided, attempt authentication first
               if (passwordArg) {
-                const authResp = await abortableFetch("/api/auth/login", {
+                const authResp = await abortableFetch(getApiUrl("/api/auth/login"), {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

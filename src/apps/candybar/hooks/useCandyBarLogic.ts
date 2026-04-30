@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useTranslatedHelpItems } from "@/hooks/useTranslatedHelpItems";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { getApiUrl } from "@/utils/platform";
 import { helpItems } from "..";
 
 export interface IconPackIcon {
@@ -69,7 +70,7 @@ export function useCandyBarLogic({
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/candybar/packs");
+      const res = await fetch(getApiUrl("/api/candybar/packs"));
       if (!res.ok) throw new Error(`Failed to fetch icon packs: ${res.status}`);
       const data = await res.json();
       setIconPacks(data.packs || []);

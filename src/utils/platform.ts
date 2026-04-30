@@ -21,20 +21,31 @@ export function isWeb(): boolean {
 /**
  * Get the API base URL.
  * In Tauri (desktop app), returns the production API URL.
- * In web browser, returns empty string for relative paths.
+ * In local web dev, returns empty string for relative paths.
+ * In production web, returns the backend origin.
  */
 export function getApiBaseUrl(): string {
   if (isTauri()) {
     return getAppPublicOrigin();
   }
-  return "";
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname.toLowerCase();
+    const isLocalHost =
+      host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+
+    if (import.meta.env.DEV || isLocalHost) {
+      return "";
+    }
+  }
+
+  return import.meta.env.VITE_APP_PUBLIC_ORIGIN?.trim() || "https://os.ryo.lu";
 }
 
 /**
  * Get the full API URL for a given path.
- * Automatically handles Tauri vs web differences.
+ * Automatically handles Tauri, local dev, and production web differences.
  * @param path - API path (e.g., "/api/chat")
- * @returns Full URL (e.g., "https://os.ryo.lu/api/chat" in Tauri, "/api/chat" in web)
+ * @returns Full URL (e.g., "https://os.ryo.lu/api/chat" in Tauri/prod, "/api/chat" locally)
  */
 export function getApiUrl(path: string): string {
   const baseUrl = getApiBaseUrl();
@@ -65,4 +76,3 @@ export function isTauriWindows(): boolean {
   // If WebKit (no window.chrome), it's Mac
   return hasChrome;
 }
-

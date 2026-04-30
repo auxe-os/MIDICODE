@@ -1499,7 +1499,7 @@ async function restoreSessionFromCookie(
       headers["X-Username"] = expectedUsername;
     }
 
-    const response = await abortableFetch("/api/auth/session", {
+    const response = await abortableFetch(getApiUrl("/api/auth/session"), {
       method: "GET",
       headers,
       timeout: 10000,

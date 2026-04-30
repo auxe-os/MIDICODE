@@ -3,6 +3,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { useDashboardStore, type StocksWidgetConfig } from "@/stores/useDashboardStore";
 import { useTranslation } from "react-i18next";
 import { MagnifyingGlass, Plus, X, ArrowClockwise } from "@phosphor-icons/react";
+import { getApiUrl } from "@/utils/platform";
 
 interface StockQuote {
   symbol: string;
@@ -199,7 +200,7 @@ async function fetchQuotes(symbols: string[]): Promise<StockQuote[]> {
   const cached = quotesCache.get(key);
   if (cached && Date.now() - cached.ts < CACHE_TTL_QUOTES) return cached.quotes;
 
-  const res = await fetch(`/api/stocks?symbols=${encodeURIComponent(key)}`);
+  const res = await fetch(getApiUrl(`/api/stocks?symbols=${encodeURIComponent(key)}`));
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();
   const quotes: StockQuote[] = (data.quotes as ApiQuote[]).map((q) => ({
@@ -221,7 +222,9 @@ async function fetchChart(
 
   const apiRange = RANGE_TO_API[range];
   const res = await fetch(
-    `/api/stocks?symbols=${encodeURIComponent(symbol)}&chart=${encodeURIComponent(symbol)}&range=${apiRange}`
+    getApiUrl(
+      `/api/stocks?symbols=${encodeURIComponent(symbol)}&chart=${encodeURIComponent(symbol)}&range=${apiRange}`
+    )
   );
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();

@@ -189,9 +189,9 @@ export default defineConfig({
         "fonts/*.woff2",
       ],
       manifest: {
-        name: "MIDICODE HARDWARE",
+        name: "MIDICODE",
         short_name: "MIDICODE",
-        description: "MIDICODE HARDWARE — an AI OS experience",
+        description: "MIDICODE — an AI OS experience",
         theme_color: "#000000",
         background_color: "#000000",
         display: "standalone",
