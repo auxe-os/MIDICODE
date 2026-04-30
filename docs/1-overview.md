@@ -19,7 +19,7 @@ graph TB
     subgraph Data["Data Layer"]
         IndexedDB[(IndexedDB)]
         LocalStorage[(LocalStorage)]
-        API[Vercel + Bun API]
+        API[Bun API + Vercel-compatible handlers]
     end
     
     subgraph External["External Services"]
@@ -81,12 +81,12 @@ graph TB
 | Package Manager | Bun (`bun@1.3.5`) |
 | Build | Vite, Bun |
 | Desktop | Tauri (macOS, Windows, Linux) |
-| Deployment | Vercel (web), standalone Bun API (self-hosted), Docker / Coolify |
+| Deployment | Coolify / Docker / standalone Bun recommended, Vercel-compatible |
 
 ## Project Structure
 
 ```
-├── api/              # Node-style API endpoints (Vercel + standalone Bun server)
+├── api/              # Node-style API endpoints (standalone Bun + Vercel-compatible)
 │   └── _utils/       # Shared API utilities (api-handler, middleware, auth, redis, storage, realtime, analytics, etc.)
 ├── public/           # Static assets
 ├── src/

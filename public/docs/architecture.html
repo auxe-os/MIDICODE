@@ -358,7 +358,7 @@
     API --> External
     State --> API</pre>
 <h2>Deployment Targets</h2>
-<table><thead><tr><th>Target</th><th>Technology</th><th>Description</th></tr></thead><tbody><tr><td><strong>Web (PWA)</strong></td><td>Vercel</td><td>Primary deployment with CDN, serverless functions</td></tr><tr><td><strong>Desktop</strong></td><td>Tauri</td><td>Native app for macOS, Windows, Linux</td></tr><tr><td><strong>Development</strong></td><td>Vite + Bun</td><td>Local frontend with HMR and optional standalone API proxy</td></tr><tr><td><strong>Self-hosted API</strong></td><td>Bun (<code>Bun.serve</code>)</td><td>Run <code>api/<em></code> routes without Vercel via <code><a href="https://github.com/ryokun6/ryos/blob/main/scripts/api-standalone-server.ts" target="_blank" rel="noopener noreferrer" style="color: #00f; text-decoration: underline;">scripts/api-standalone-server.ts</a></code></td></tr><tr><td><strong>Docker / Coolify</strong></td><td>Dockerfile + Bun</td><td>Container deployment with health checks at <code>/health</code></td></tr></tbody></table>
+<table><thead><tr><th>Target</th><th>Technology</th><th>Description</th></tr></thead><tbody><tr><td><strong>Web (PWA)</strong></td><td>Coolify / Docker / Bun</td><td>Recommended production deployment using the Bun server behind a container or reverse proxy</td></tr><tr><td><strong>Desktop</strong></td><td>Tauri</td><td>Native app for macOS, Windows, Linux</td></tr><tr><td><strong>Development</strong></td><td>Vite + Bun</td><td>Local frontend with HMR and optional standalone API proxy</td></tr><tr><td><strong>Standalone API</strong></td><td>Bun (<code>Bun.serve</code>)</td><td>Run <code>api/<em></code> routes directly via <code><a href="https://github.com/ryokun6/ryos/blob/main/scripts/api-standalone-server.ts" target="_blank" rel="noopener noreferrer" style="color: #00f; text-decoration: underline;">scripts/api-standalone-server.ts</a></code></td></tr><tr><td><strong>Vercel-compatible</strong></td><td>Vercel</td><td>Supported compatibility path for serverless deployment and platform integrations</td></tr></tbody></table>
 <pre class="mermaid">graph LR
     subgraph Source
         A[Source Code]
@@ -379,11 +379,11 @@
     B --> D
     B --> E
     
-    C --> F[Vercel CDN]
+    C --> F[Coolify / Bun runtime]
     D --> G[Tauri - macOS/Windows/Linux]
     E --> H[localhost + HMR]</pre>
 <h2>API Runtime Modes</h2>
-<p>The API layer is shared across two execution environments: <ul><li><strong>Vercel serverless functions:</strong> <code>api/</em></code> handlers run as Node.js functions for primary web deployment.</li></ul><ul><li><strong>Standalone Bun server:</strong> <code><a href="https://github.com/ryokun6/ryos/blob/main/scripts/api-standalone-server.ts" target="_blank" rel="noopener noreferrer" style="color: #00f; text-decoration: underline;">scripts/api-standalone-server.ts</a></code> uses <code>Bun.serve</code> and adapts requests/responses to the Vercel handler shape for non-Vercel environments.</li></ul></p>
+<p>The API layer is shared across two execution environments: <ul><li><strong>Standalone Bun server:</strong> <code><a href="https://github.com/ryokun6/ryos/blob/main/scripts/api-standalone-server.ts" target="_blank" rel="noopener noreferrer" style="color: #00f; text-decoration: underline;">scripts/api-standalone-server.ts</a></code> uses <code>Bun.serve</code> and serves the frontend, API routes, docs, health checks, and optional local WebSocket realtime.</li></ul><ul><li><strong>Vercel serverless functions:</strong> <code>api/</em></code> handlers remain compatible with Vercel's Node.js runtime for teams that still want that deployment mode.</li></ul></p>
 <p>Shared utilities under <code>api/_utils/</code> (including <code>api-handler.ts</code>, <code>middleware.ts</code>, <code>request-auth.ts</code>, <code>redis.ts</code>, <code>storage.ts</code>, <code>realtime.ts</code>, <code>runtime-config.ts</code>, <code>constants.ts</code>, <code>_cors.ts</code>, <code>_ssrf.ts</code>, <code>_rate-limit.ts</code>, <code>_validation.ts</code>, <code>_logging.ts</code>, <code>_analytics.ts</code>, <code>_sse.ts</code>, and <code>_memory.ts</code>) provide consistent API patterns across routes.</p>
 <p>Frontend clients under <code>src/api/</code> (<code>auth</code>, <code>rooms</code>, <code>admin</code>, <code>songs</code>, <code>listen</code>, and <code>sync</code>) centralize request logic for app modules.</p>
 <h2>Chunk Splitting Strategy</h2>

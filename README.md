@@ -51,6 +51,16 @@ A modern web-based desktop environment inspired by classic macOS and Windows, bu
 
 ## Local Development
 
+### Local env bootstrap
+
+The canonical local env file is `.env.local`.
+
+```bash
+cp .env.example .env.local
+```
+
+`.env.local` is local-only and ignored by git. Never commit real secrets. If a secret is pasted into chat, an issue, or a commit, rotate it before using it again.
+
 ### Fastest way to run locally
 
 If you just want the app running without backend services, use:
@@ -73,7 +83,7 @@ If you want the standalone API and frontend together, use:
 bun run dev
 ```
 
-This requires Redis configuration before the API server will start. Set one of:
+This requires Redis configuration before the API server will start. Configure `.env.local`, then set one of:
 
 ```bash
 REDIS_URL=redis://...
@@ -87,6 +97,36 @@ REDIS_KV_REST_API_TOKEN=...
 ```
 
 Without Redis, `bun run dev` will fail during API startup, but `bun run dev:vite` will still work for frontend-only development.
+
+### Minimum viable local envs
+
+Frontend only:
+
+- no `.env.local` required
+- run `bun run dev:vite`
+
+Full local API using Upstash:
+
+```bash
+cp .env.example .env.local
+# then set:
+REDIS_KV_REST_API_URL=...
+REDIS_KV_REST_API_TOKEN=...
+
+bun run dev
+```
+
+Full self-host style stack:
+
+```bash
+cp .env.example .env.local
+# then set:
+REDIS_URL=redis://default:password@127.0.0.1:6379/0
+REALTIME_PROVIDER=local
+REALTIME_WS_PATH=/ws
+
+bun run dev
+```
 
 ## Project Structure
 
@@ -113,11 +153,11 @@ Without Redis, `bun run dev` will fail during API startup, but `bun run dev:vite
 - **3D:** Three.js (shaders)
 - **Text Editor:** TipTap
 - **State:** Zustand
-- **Storage:** IndexedDB, LocalStorage, Redis (Upstash)
+- **Storage:** IndexedDB, LocalStorage, Redis (Upstash REST / standard), Vercel Blob / S3-compatible
 - **AI:** OpenAI, Anthropic, Google via Vercel AI SDK
-- **Real-time:** Pusher
+- **Real-time:** Pusher or local WebSocket
 - **Build:** Vite, Bun
-- **Deployment:** Vercel
+- **Deployment:** Coolify / Docker / standalone Bun recommended, Vercel-compatible
 
 ## Scripts
 
@@ -160,9 +200,11 @@ You can run API tests directly against it:
 API_URL=http://localhost:3000 bun run test:new-api
 ```
 
-## VPS / self-hosting path
+## Production deployment
 
-ryOS now supports a **single Bun production server** for self-hosting and container platforms like Coolify. That server handles:
+Coolify + the Bun production server is the recommended deployment path. The same runtime also works on a plain VPS, Docker, or other self-hosted container platforms, while preserving Vercel compatibility in the codebase.
+
+The single Bun production server handles:
 
 - `/api/*`
 - static frontend assets from `dist/`
@@ -170,13 +212,15 @@ ryOS now supports a **single Bun production server** for self-hosting and contai
 - docs clean URLs
 - optional local websocket realtime
 
-### Quick self-host start
+### Quick Coolify/self-host start
 
 ```bash
 bun install
 bun run build
 APP_PUBLIC_ORIGIN="https://your-domain.com" \
 API_ALLOWED_ORIGINS="https://your-domain.com" \
+API_HOST="0.0.0.0" \
+PORT="3000" \
 bun run start
 ```
 
@@ -213,10 +257,21 @@ PUSHER_CLUSTER="us3"
 or:
 
 ```bash
-# Local websocket path (best paired with REDIS_URL)
+# Local websocket path (recommended for Coolify/self-host; best paired with REDIS_URL)
 REALTIME_PROVIDER="local"
 REALTIME_WS_PATH="/ws"
 ```
+
+### Recommended self-hosted production combination
+
+```bash
+REDIS_URL="redis://default:password@redis:6379/0"
+REALTIME_PROVIDER="local"
+REALTIME_WS_PATH="/ws"
+STORAGE_PROVIDER="s3"
+```
+
+Pusher and Vercel Blob remain supported as compatibility fallbacks.
 
 Detailed runbook: [`docs/1.3-self-hosting-vps.md`](docs/1.3-self-hosting-vps.md)
 

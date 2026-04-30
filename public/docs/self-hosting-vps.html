@@ -307,9 +307,13 @@
         <h1>Self-hosting ryOS on a VPS or Coolify (without Vercel)</h1>
 <p>ryOS can run without Vercel as a <strong>single Bun production server</strong>. That server handles: <ul><li>API routes under <code>api/</code></li></ul><ul><li>built frontend assets from <code>dist/</code></li><li>SPA deep links like <code>/chats</code> and <code>/ipod/:id</code></li><li>docs clean URLs like <code>/docs/overview</code></li><li>optional local websocket realtime</li></ul></p>
 <p>This makes it a good fit for: <ul><li>a plain VPS + systemd</li></ul><ul><li>Coolify Dockerfile deployments</li><li>self-hosted containers behind Traefik / Nginx / Caddy</li></ul></p>
+<p>Coolify + Bun is the recommended production path for this repo. Vercel-compatible code paths remain supported, but they are no longer the default deployment recommendation.</p>
 <hr>
 <h2>1) Prerequisites</h2>
 <ul><li>Linux VPS or container host</li></ul><ul><li>Bun installed (or Docker/Coolify)</li><li>a public domain + TLS if exposing to the internet</li><li>Redis if using self-hosted Redis / local websocket fanout</li></ul>
+<p>Before you start, create your local env file from the tracked template:</p>
+<pre><code>cp .env.example .env.local</code></pre>
+<code>.env.local</code> is local-only and ignored by git. Never commit real secrets. If a secret is pasted into chat, an issue, or a commit, rotate it immediately.
 <hr>
 <h2>2) Build + run locally in production mode</h2>
 <pre><code>bun install
@@ -318,6 +322,16 @@ APP_PUBLIC_ORIGIN="https://your-domain.com" \
 API_ALLOWED_ORIGINS="https://your-domain.com" \
 bun run start</code></pre>
 <p>Important runtime envs: <ul><li><code>PORT</code> or <code>API_PORT</code> — listening port (defaults to <code>3000</code>)</li></ul><ul><li><code>API_HOST</code> — bind host (defaults to <code>0.0.0.0</code>)</li><li><code>APP_PUBLIC_ORIGIN</code> — canonical browser origin, e.g. <code>https://your-domain.com</code></li><li><code>API_ALLOWED_ORIGINS</code> — comma-separated allowed browser origins for <code>/api/<em></code>; supports wildcard subdomain patterns (e.g. <code></em>.example.com</code>), and <code><em></code> to allow all origins</li><li><code>STORAGE_PROVIDER</code> — optional explicit storage backend (<code>s3</code>, <code>vercel-blob</code>); auto-detected if unset</li></ul></p>
+<h3>Minimum viable local envs</h3>
+<p>Frontend only: <ul><li>no <code>.env.local</code> required</li></ul><ul><li>run <code>bun run dev:vite</code></li></ul></p>
+<p>Full local API using Upstash:</p>
+<pre><code>cp .env.example .env.local
+# set REDIS_KV_REST_API_URL and REDIS_KV_REST_API_TOKEN
+bun run dev</code></pre>
+<p>Full self-host style stack:</p>
+<pre><code>cp .env.example .env.local
+# set REDIS_URL, REALTIME_PROVIDER=local, REALTIME_WS_PATH=/ws
+bun run dev</code></pre>
 <hr>
 <h2>3) Redis backend options</h2>
 <p>ryOS supports <strong>two Redis modes</strong>.</p>
@@ -379,9 +393,11 @@ STORAGE_PROVIDER=s3
 S3_BUCKET=ryos-sync
 S3_REGION=us-east-1
 S3_ENDPOINT=https://s3.your-provider.com
+S3_PUBLIC_ENDPOINT=https://s3.your-provider.com
 S3_ACCESS_KEY_ID=your-access-key
 S3_SECRET_ACCESS_KEY=your-secret-key</code></pre>
 <p>Coolify's reverse proxy supports WebSockets, so <code>/ws</code> can stay behind the normal app domain.</p>
+<p>Deployment checklist: <ul><li>confirm <code>/health</code> returns <code>200</code></li></ul><ul><li>keep WebSocket proxying enabled for <code>/ws</code></li><li>prefer <code>REDIS_URL</code>, <code>REALTIME_PROVIDER=local</code>, and <code>STORAGE_PROVIDER=s3</code></li><li>use <code>API_ALLOWED_ORIGINS</code> to match the real browser origins</li></ul></p>
 <h3>Version / build number (avoid "dev")</h3>
 <p>The app shows a version like <code>10.3 (abc1234)</code> from <code>version.json</code>. Without a commit SHA at build time, it falls back to <code>dev</code>. To show the real commit: <ol><li>In Coolify → your app → <strong>Advanced</strong> → enable <strong>Include Source Commit in Build</strong></li></ol><ol><li>The build script reads <code>SOURCE_COMMIT</code> (Coolify) or <code>VERCEL_GIT_COMMIT_SHA</code> (Vercel) or <code>GIT_COMMIT_SHA</code> (generic CI)</li></ol></p>
 <p>No extra env vars needed — Coolify injects <code>SOURCE_COMMIT</code> when that option is enabled.</p>
@@ -453,7 +469,6 @@ sudo iptables-nft -S FORWARD</code></pre>
 <p>After applying it, re-test Redis TCP between containers before debugging ryOS.</p>
 <h3>Important note</h3>
 <p>This is a host-level Docker networking issue. If you see the timeout only on a specific VM, VPS image, or nested-container environment, fix the Docker / iptables configuration there rather than changing ryOS application code.</p>
-
       </article>
       
       <nav class="nav">
