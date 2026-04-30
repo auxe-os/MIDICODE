@@ -33,6 +33,7 @@ export function IpodWheel({
 }: IpodWheelProps) {
   const { t } = useTranslation();
   const wheelRef = useRef<HTMLDivElement>(null);
+  const isClassicTheme = theme === "classic";
   // Accumulated mouse wheel delta (for desktop scrolling)
   const [wheelDelta, setWheelDelta] = useState(0);
 
@@ -377,8 +378,8 @@ export function IpodWheel({
     <div
       className={cn(
         "mt-6 relative w-[180px] h-[180px] rounded-full flex items-center justify-center select-none no-select-gesture",
-        theme === "classic"
-          ? "bg-gray-300/60"
+        isClassicTheme
+          ? "border border-neutral-400/80 bg-gradient-to-b from-neutral-200 via-neutral-200 to-neutral-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-8px_20px_rgba(0,0,0,0.08)]"
           : theme === "u2"
           ? "bg-red-700/60"
           : "bg-neutral-800/50"
@@ -436,8 +437,8 @@ export function IpodWheel({
         }}
         className={cn(
           "ipod-wheel-center absolute w-16 h-16 rounded-full z-10 flex items-center justify-center outline-none focus:outline-none focus-visible:outline-none select-none no-select-gesture",
-          theme === "classic"
-            ? "bg-white/30"
+          isClassicTheme
+            ? "border border-neutral-300/90 bg-gradient-to-b from-white/90 to-neutral-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
             : theme === "u2"
             ? "bg-black/70"
             : "bg-black/30"
@@ -456,7 +457,10 @@ export function IpodWheel({
       >
         {/* Wheel labels - no click handlers */}
         <div
-          className="absolute top-1.5 text-center left-1/2 transform -translate-x-1/2 font-chicago text-xs text-white menu-button cursor-default select-none no-select-gesture"
+          className={cn(
+            "absolute top-1.5 text-center left-1/2 transform -translate-x-1/2 font-chicago text-xs menu-button cursor-default select-none no-select-gesture",
+            isClassicTheme ? "text-neutral-600" : "text-white"
+          )}
           onClick={(e) => {
             if (recentTouchRef.current || isInTouchDragRef.current || isInMouseDragRef.current) return;
             e.stopPropagation(); // Prevent triggering wheel mousedown
@@ -465,13 +469,28 @@ export function IpodWheel({
         >
           MENU
         </div>
-        <div className="absolute right-2 text-right top-1/2 transform -translate-y-1/2 font-chicago text-[12px] text-white cursor-default select-none no-select-gesture">
+        <div
+          className={cn(
+            "absolute right-2 text-right top-1/2 transform -translate-y-1/2 font-chicago text-[12px] cursor-default select-none no-select-gesture",
+            isClassicTheme ? "text-neutral-600" : "text-white"
+          )}
+        >
           ⏭
         </div>
-        <div className="absolute bottom-1 text-center left-1/2 transform -translate-x-1/2 font-chicago text-[12px] text-white cursor-default select-none no-select-gesture">
+        <div
+          className={cn(
+            "absolute bottom-1 text-center left-1/2 transform -translate-x-1/2 font-chicago text-[12px] cursor-default select-none no-select-gesture",
+            isClassicTheme ? "text-neutral-600" : "text-white"
+          )}
+        >
           ⏯
         </div>
-        <div className="absolute left-2 text-left top-1/2 transform -translate-y-1/2 font-chicago text-[12px] text-white cursor-default select-none no-select-gesture">
+        <div
+          className={cn(
+            "absolute left-2 text-left top-1/2 transform -translate-y-1/2 font-chicago text-[12px] cursor-default select-none no-select-gesture",
+            isClassicTheme ? "text-neutral-600" : "text-white"
+          )}
+        >
           ⏮
         </div>
       </div>
