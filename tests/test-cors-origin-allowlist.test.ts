@@ -26,13 +26,14 @@ describe("CORS localhost allowlist", () => {
     expect(isAllowedOrigin("http://localhost:3001")).toBe(true);
   });
 
-  test("keeps unknown localhost ports blocked by default", () => {
+  test("allows fallback Vite localhost ports in development", () => {
     delete process.env.API_ALLOWED_ORIGINS;
     delete process.env.API_RUNTIME_ENV;
     delete process.env.API_ENV;
     delete process.env.VERCEL_ENV;
     delete process.env.NODE_ENV;
 
-    expect(isAllowedOrigin("http://localhost:3999")).toBe(false);
+    expect(isAllowedOrigin("http://localhost:5174")).toBe(true);
+    expect(isAllowedOrigin("http://127.0.0.1:3999")).toBe(true);
   });
 });
