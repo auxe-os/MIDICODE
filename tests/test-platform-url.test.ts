@@ -24,8 +24,8 @@ describe("platform API URL selection", () => {
   test("uses the production origin outside localhost", () => {
     browserGlobals.window = {
       location: {
-        hostname: "midicode.netlify.app",
-        origin: "https://midicode.netlify.app",
+        hostname: "app.example.com",
+        origin: "https://app.example.com",
       } as Location,
     } as Window & typeof globalThis;
 
